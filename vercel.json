@@ -2,7 +2,7 @@
   "headers": [
     { "source": "/cal/(.*)\\.ics", "headers": [
       { "key": "Content-Type", "value": "text/calendar; charset=utf-8" },
-      { "key": "Content-Disposition", "value": "inline; filename=\"sonya-birthday.ics\"" }
+      { "key": "Content-Disposition", "value": "inline; filename=\"sonia-birthday.ics\"" }
     ]}
   ]
 }

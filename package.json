@@ -1,0 +1,10 @@
+{
+  "name": "sonia-bd-3",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  }
+}

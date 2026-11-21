@@ -1,0 +1,14 @@
+[
+  {
+    "id": "lego-duplo",
+    "name": {
+      "ru": "LEGO DUPLO — набор для малышей",
+      "et": "LEGO DUPLO komplekt väikestele",
+      "en": "LEGO DUPLO starter set"
+    },
+    "url": "https://www.lego.com/et-ee/themes/duplo",
+    "image": "",
+    "emoji": "🧱",
+    "price": "~30 €"
+  }
+]

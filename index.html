@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Соне 3 года! · Sonya 3</title>
+<title>Соне 3 года! · Sonia 3</title>
 <meta name="description" content="Приглашение на день рождения Сони — 21.12.2026, 18:00, Smile Park Pirita">
 <meta property="og:title" content="Соне 3 года! 🎂">
 <meta property="og:description" content="21.12.2026 · 18:00 · Smile Park Pirita">
 <meta property="og:image" content="img/sonya.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#fff8f3; --ink:#3b2f4a; --muted:#7a6d88;
@@ -21,7 +21,7 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{font-family:"Nunito",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;overflow-x:hidden}
-  h1,h2,h3,.big{font-family:"Baloo 2",cursive}
+  h1,h2,h3,.big{font-family:"Nunito",system-ui,sans-serif;font-weight:900;letter-spacing:-.01em}
   a{color:inherit}
 
   /* ---------- language switch ---------- */
@@ -49,7 +49,7 @@
   .chip small{display:block;font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
   .hero-photo{position:relative;display:grid;place-items:center;min-width:0}
   .hero-text{min-width:0}
-  .hero-photo::before{content:"";position:absolute;width:88%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--pink-soft),var(--blue-soft));z-index:-1;top:12%}
+  .hero-photo::before{content:"";position:absolute;width:min(88%,420px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--pink-soft),var(--blue-soft));z-index:-1;top:12%}
   .hero-photo img{width:100%;max-width:440px;height:auto;filter:drop-shadow(0 20px 30px rgba(120,80,140,.18));animation:bob 4s ease-in-out infinite}
   @keyframes bob{50%{transform:translateY(-10px)}}
   .balloon{position:absolute;font-size:46px;animation:float 6s ease-in-out infinite}
@@ -63,7 +63,9 @@
   .title p{color:var(--muted);margin-top:6px;font-size:18px}
 
   /* ---------- details ---------- */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){.grid{grid-template-columns:1fr}}
   .card{background:var(--card);border-radius:24px;padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
   .card .ico{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-size:28px;margin-bottom:14px}
   .card h3{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:"Nunito";font-weight:800}
@@ -72,33 +74,51 @@
   .c1 .ico{background:var(--pink-soft)} .c2 .ico{background:var(--blue-soft)} .c3 .ico{background:#fff3cf} .c4 .ico{background:#e2f8ef}
 
   .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
-  .btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font:800 17px "Nunito";padding:14px 22px;border-radius:999px;background:var(--pink);color:#fff;box-shadow:0 6px 0 #e06a90;transition:transform .15s,box-shadow .15s}
-  .btn:hover{transform:translateY(2px);box-shadow:0 4px 0 #e06a90}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font:800 17px "Nunito";padding:14px 22px;border-radius:999px;background:var(--pink);color:#fff;box-shadow:0 6px 0 #e06a90}
   .btn.alt{background:#fff;color:var(--ink);box-shadow:0 6px 0 #e7dcef}
-  .btn.alt:hover{box-shadow:0 4px 0 #e7dcef}
   .cal{position:relative}
   .cal-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:6px;min-width:220px;z-index:5;display:flex;flex-direction:column}
   .cal-menu[hidden]{display:none}
   .cal-menu a{padding:12px 14px;border-radius:12px;text-decoration:none;font-weight:800;white-space:nowrap}
-  .cal-menu a:hover{background:var(--pink-soft)}
 
   /* ---------- countdown ---------- */
   .countdown{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
   .cd{background:#fff;border-radius:22px;box-shadow:var(--shadow);min-width:96px;padding:16px 10px;text-align:center}
-  .cd b{display:block;font:800 44px/1 "Baloo 2";color:var(--pink)}
+  .cd b{display:block;font:900 44px/1 "Nunito";color:var(--pink)}
   .cd span{color:var(--muted);font-weight:700;font-size:14px}
   .cd:nth-child(2) b{color:#5aa6f5}.cd:nth-child(3) b{color:#e9a60c}.cd:nth-child(4) b{color:#3dbf8f}
-  .party-now{text-align:center;font:800 32px "Baloo 2";color:var(--pink)}
+  .party-now{text-align:center;font:800 32px "Nunito";color:var(--pink)}
 
   /* ---------- gifts ---------- */
-  .gifts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
-  .gift{background:#fff;border-radius:22px;box-shadow:var(--shadow);overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform .2s}
-  .gift:hover{transform:translateY(-4px) rotate(-.5deg)}
-  .gift .pic{aspect-ratio:4/3;background:var(--blue-soft) center/cover no-repeat;display:grid;place-items:center;font-size:56px}
-  .gift .body{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .gift .name{font-weight:800}
-  .gift .price{color:var(--muted);font-weight:700;white-space:nowrap}
-  .gift .go{margin:0 18px 18px;text-align:center;background:var(--pink-soft);color:#d4507a;font-weight:800;border-radius:999px;padding:9px}
+  .gifts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),300px));justify-content:center;gap:22px}
+  .gift{background:#fff;border-radius:26px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+  .gift .pic{aspect-ratio:16/11;background:linear-gradient(135deg,var(--blue-soft),var(--pink-soft)) center/cover no-repeat;display:grid;place-items:center;font-size:clamp(56px,14vw,80px)}
+  .gift .body{padding:18px 20px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .gift .name{font-weight:800;font-size:18px;line-height:1.3;overflow-wrap:anywhere}
+  .gift .price{align-self:flex-start;background:#fff3cf;color:#a5780a;font-weight:800;font-size:14px;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .gift .acts{display:flex;flex-direction:column;gap:10px;padding:4px 20px 20px}
+  .gift .acts a,.gift .acts button{display:block;text-align:center;text-decoration:none;font:800 15px/1.2 "Nunito";border:0;cursor:pointer;border-radius:999px;padding:12px 14px;white-space:nowrap}
+  .gift .view{background:var(--blue-soft);color:#2f78c4}
+  .gift .res{order:-1;background:var(--pink);color:#fff;box-shadow:0 4px 0 #e06a90}
+  .gift .acts a,.gift .acts button{font-size:16px;padding:13px 16px}
+  .gift.taken .pic{filter:grayscale(.7);opacity:.55}
+  .gift .tag{margin:0 20px 20px;text-align:center;background:#f3eef8;color:var(--muted);font-weight:800;border-radius:999px;padding:12px}
+  .modal{position:fixed;inset:0;z-index:50;background:rgba(59,47,74,.45);backdrop-filter:blur(4px);display:grid;place-items:center;padding:16px}
+  .modal[hidden]{display:none}
+  .modal-box{background:#fff;border-radius:26px;padding:28px 22px;width:100%;max-width:400px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+  .m-emoji{font-size:48px}
+  .modal-box h3{font-size:26px;margin:4px 0}
+  .m-gift{font-weight:800;color:#d4507a;margin-bottom:14px}
+  .modal-box label{display:block;text-align:left;font-weight:700;color:var(--muted);font-size:14px;margin-top:10px}
+  .modal-box input{display:block;width:100%;margin-top:4px;font:600 17px "Nunito";padding:12px 14px;border:2px solid #eadff0;border-radius:14px;color:var(--ink);outline:none}
+  .modal-box input:focus{border-color:var(--pink)}
+  .m-hint{font-size:13px;color:var(--muted);margin-top:10px}
+  .m-err{color:#d43d5f;font-weight:700;min-height:1.2em;margin-top:6px;font-size:14px}
+  .m-ok{color:var(--muted);margin:8px 0 6px}
+  #devPreview{color:#2f78c4;font-weight:800}
+  .m-actions{display:flex;gap:10px;justify-content:center;margin-top:12px}
+  .m-actions .btn{padding:12px 20px;font-size:16px}
+  .btn[disabled]{opacity:.6;pointer-events:none}
   .soon{background:#fff;border:3px dashed var(--lilac);border-radius:26px;padding:40px 20px;text-align:center}
   .soon .emoji{font-size:64px;display:block;animation:wiggle 2.4s ease-in-out infinite}
   @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
@@ -111,10 +131,13 @@
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
   .reveal.in{opacity:1;transform:none}
 
-  @media (max-width:760px){
+  @media (max-width:860px){
     .hero{grid-template-columns:1fr;text-align:center;padding-top:72px;gap:0}
     .hero-photo{order:-1}
     .hero-photo img{max-width:300px}
+    .hero-photo::before{width:min(86%,320px);top:10%}
+    .actions{flex-direction:column;align-items:center}
+    .actions>.btn,.cal,.cal>.btn{width:100%;max-width:320px;justify-content:center}
     .hero-text p{margin:0 auto}
     .chips{justify-content:center}
     section{padding:56px 16px}
@@ -146,7 +169,7 @@
     </div>
     <div class="hero-photo">
       <span class="balloon b1">🎈</span><span class="balloon b2">🎀</span><span class="balloon b3">🎈</span>
-      <img src="img/sonya.webp" alt="Соня / Sonya">
+      <img src="img/sonya.webp" alt="Соня / Sonia">
     </div>
   </section>
 
@@ -196,7 +219,31 @@
   </footer>
 </main>
 
-<script src="gifts.js"></script>
+<div class="modal" id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <form id="resForm" novalidate>
+      <div class="m-emoji" id="mEmoji">🎁</div>
+      <h3 id="mTitle" data-t="mTitle"></h3>
+      <p class="m-gift" id="mGift"></p>
+      <label><span data-t="mName"></span><input name="name" maxlength="60" autocomplete="name" required></label>
+      <label><span data-t="mEmail"></span><input name="email" type="email" maxlength="120" autocomplete="email" required></label>
+      <p class="m-hint" data-t="mHint"></p>
+      <p class="m-err" id="mErr" role="alert"></p>
+      <div class="m-actions">
+        <button type="button" class="btn alt" data-close data-t="mCancel"></button>
+        <button type="submit" class="btn" id="mSend" data-t="mSend"></button>
+      </div>
+    </form>
+    <div id="resOk" hidden>
+      <div class="m-emoji">💌</div>
+      <h3 data-t="okTitle"></h3>
+      <p class="m-ok" data-t="okText"></p>
+      <p><a id="devPreview" target="_blank" hidden data-t="devPreview"></a></p>
+      <div class="m-actions"><button type="button" class="btn" data-close data-t="okClose"></button></div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ===== Настройки праздника ===== */
 const PARTY = {
@@ -208,7 +255,7 @@ const PARTY = {
 
 const T = {
   ru:{
-    kicker:"🎉 Приглашение на праздник", h1a:"Нашей", name:"Сонечке", h1b:"", lead:"Ждём тебя на весёлом дне рождения с играми, тортом и улыбками!",
+    kicker:"🎉 Приглашение на праздник", h1a:"Нашей", name:"Сонечке", h1b:" уже", lead:"Ждём тебя на весёлом дне рождения с играми, тортом и улыбками!",
     chipDate:"Дата", chipTime:"Время", chipPlace:"Место", more:"Все подробности",
     detailsTitle:"Где и когда", detailsSub:"Всё, что нужно знать гостям",
     whoH:"К кому", whoV:"Соня", whoS:"Исполняется 3 годика 🎈",
@@ -218,39 +265,39 @@ const T = {
     route:"Маршрут", calendar:"В календарь", toGifts:"К подаркам",
     cdTitle:"До праздника осталось", days:"дней", hours:"часов", mins:"минут", secs:"секунд", now:"Праздник уже идёт! 🎉", past:"Спасибо, что были с нами! 💖",
     giftsTitle:"Идеи подарков 🎁", giftsSub:"Если хотите порадовать Соню — вот что ей понравится",
-    soonH:"Скоро здесь появится список", soonP:"Мы готовим идеи подарков — загляните чуть позже!", open:"Посмотреть",
+    soonH:"Скоро здесь появится список", soonP:"Мы готовим идеи подарков — загляните чуть позже!", open:"Посмотреть", reserve:"Забронировать", reservedTag:"Забронировано", mTitle:"Забронировать подарок", mName:"Ваше имя", mEmail:"Ваша почта", mHint:"Мы пришлём подтверждение и ссылку для отмены брони.", mSend:"Забронировать", mCancel:"Отмена", okTitle:"Готово! 🎉", okText:"Подарок забронирован. Проверьте почту — там подтверждение и ссылка для отмены.", okClose:"Хорошо", eName:"Введите имя", eEmail:"Проверьте адрес почты", eTaken:"Упс, этот подарок только что забронировал кто-то другой.", eServer:"Не получилось — попробуйте ещё раз чуть позже.", devPreview:"Открыть письмо (тест)",
     footer:"Ждём вас! 💕", footerSub:"Соня и её семья", icsTitle:"День рождения Сони (3 года)"
   },
   et:{
-    kicker:"🎉 Kutse peole", h1a:"Meie", name:"Sonya", h1b:" saab", lead:"Ootame sind lõbusale sünnipäevapeole – mängud, tort ja palju naeru!",
+    kicker:"🎉 Kutse peole", h1a:"Meie", name:"Sonia", h1b:" saab", lead:"Ootame sind lõbusale sünnipäevapeole – mängud, tort ja palju naeru!",
     chipDate:"Kuupäev", chipTime:"Kellaaeg", chipPlace:"Koht", more:"Kõik üksikasjad",
     detailsTitle:"Kus ja millal", detailsSub:"Kõik, mida külalised peavad teadma",
-    whoH:"Kelle juurde", whoV:"Sonya", whoS:"Saab 3-aastaseks 🎈",
+    whoH:"Kelle juurde", whoV:"Sonia", whoS:"Saab 3-aastaseks 🎈",
     whenH:"Millal", whenV:"21. detsember", whenS:"Esmaspäev, 2026",
     timeH:"Kellaaeg", timeS:"Algus kell 18:00, lõpp umbes 21:00",
     whereH:"Kus", whereS:"Mängutuba Piritas, Tallinn",
     route:"Teekond", calendar:"Lisa kalendrisse", toGifts:"Kingituste juurde",
     cdTitle:"Peoni on jäänud", days:"päeva", hours:"tundi", mins:"minutit", secs:"sekundit", now:"Pidu käib! 🎉", past:"Aitäh, et olite meiega! 💖",
-    giftsTitle:"Kingiideed 🎁", giftsSub:"Kui soovite Sonyat rõõmustada – siin on, mis talle meeldiks",
-    soonH:"Nimekiri tuleb peagi", soonP:"Kogume kingiideid – vaadake veidi hiljem uuesti!", open:"Vaata",
-    footer:"Ootame teid! 💕", footerSub:"Sonya ja tema pere", icsTitle:"Sonya 3. sünnipäev"
+    giftsTitle:"Kingiideed 🎁", giftsSub:"Kui soovite Soniat rõõmustada – siin on, mis talle meeldiks",
+    soonH:"Nimekiri tuleb peagi", soonP:"Kogume kingiideid – vaadake veidi hiljem uuesti!", open:"Vaata", reserve:"Broneeri", reservedTag:"Broneeritud", mTitle:"Broneeri kingitus", mName:"Sinu nimi", mEmail:"Sinu e-post", mHint:"Saadame kinnituse ja lingi broneeringu tühistamiseks.", mSend:"Broneeri", mCancel:"Loobu", okTitle:"Valmis! 🎉", okText:"Kingitus on broneeritud. Vaata oma postkasti – seal on kinnitus ja tühistamise link.", okClose:"Selge", eName:"Sisesta nimi", eEmail:"Kontrolli e-posti aadressi", eTaken:"Oih, keegi broneeris selle kingituse just praegu.", eServer:"Ei õnnestunud – proovi veidi hiljem uuesti.", devPreview:"Ava kiri (test)",
+    footer:"Ootame teid! 💕", footerSub:"Sonia ja tema pere", icsTitle:"Sonia 3. sünnipäev"
   },
   en:{
-    kicker:"🎉 You're invited", h1a:"Our", name:"Sonya", h1b:" is turning", lead:"Join us for a fun birthday party with games, cake and lots of smiles!",
+    kicker:"🎉 You're invited", h1a:"Our", name:"Sonia", h1b:" is turning", lead:"Join us for a fun birthday party with games, cake and lots of smiles!",
     chipDate:"Date", chipTime:"Time", chipPlace:"Place", more:"All the details",
     detailsTitle:"Where & when", detailsSub:"Everything guests need to know",
-    whoH:"Whose party", whoV:"Sonya", whoS:"Turning 3 🎈",
+    whoH:"Whose party", whoV:"Sonia", whoS:"Turning 3 🎈",
     whenH:"When", whenV:"December 21", whenS:"Monday, 2026",
     timeH:"Time", timeS:"Starts at 18:00, ends around 21:00",
     whereH:"Where", whereS:"Kids' playroom in Pirita, Tallinn",
     route:"Directions", calendar:"Add to calendar", toGifts:"Gift ideas",
     cdTitle:"Party starts in", days:"days", hours:"hours", mins:"minutes", secs:"seconds", now:"The party is on! 🎉", past:"Thank you for celebrating with us! 💖",
-    giftsTitle:"Gift ideas 🎁", giftsSub:"If you'd like to make Sonya happy — here's what she'd love",
-    soonH:"The list is coming soon", soonP:"We're collecting gift ideas — check back a little later!", open:"View",
-    footer:"See you there! 💕", footerSub:"Sonya and her family", icsTitle:"Sonya's 3rd birthday"
+    giftsTitle:"Gift ideas 🎁", giftsSub:"If you'd like to make Sonia happy — here's what she'd love",
+    soonH:"The list is coming soon", soonP:"We're collecting gift ideas — check back a little later!", open:"View", reserve:"Reserve", reservedTag:"Reserved", mTitle:"Reserve a gift", mName:"Your name", mEmail:"Your e-mail", mHint:"We'll send a confirmation and a link to cancel the reservation.", mSend:"Reserve", mCancel:"Cancel", okTitle:"Done! 🎉", okText:"The gift is reserved. Check your inbox for the confirmation and cancel link.", okClose:"OK", eName:"Please enter your name", eEmail:"Please check your e-mail address", eTaken:"Oops, someone has just reserved this gift.", eServer:"Something went wrong — please try again later.", devPreview:"Open the e-mail (test)",
+    footer:"See you there! 💕", footerSub:"Sonia and her family", icsTitle:"Sonia's 3rd birthday"
   }
 };
-// RU heading reads "Нашей Сонечке 3"; ET "Meie Sonya saab 3"; EN "Our Sonya is turning 3"
+// RU heading reads "Нашей Сонечке уже 3"; ET "Meie Sonia saab 3"; EN "Our Sonia is turning 3"
 
 let lang = "ru";
 try { lang = localStorage.getItem("lang") || (navigator.language||"ru").slice(0,2); } catch(e){}
@@ -279,7 +326,7 @@ function updateCalLinks(){
   document.getElementById("calOutlook").href = "https://outlook.live.com/calendar/0/deeplink/compose?" + new URLSearchParams({
     path:"/calendar/action/compose", rru:"addevent", subject:T[lang].icsTitle, startdt:PARTY.start, enddt:PARTY.end, location:PARTY.place, body:site
   });
-  document.getElementById("calApple").href = "cal/sonya-" + lang + ".ics";
+  document.getElementById("calApple").href = "cal/sonia-" + lang + ".ics";
 }
 
 /* countdown */
@@ -296,23 +343,77 @@ function tick(){
 }
 setInterval(tick, 1000);
 
-/* gifts */
-function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+/* gifts + reservations */
+let GIFTS = [], RESERVED = new Set(), apiOk = false, current = null;
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+const gName = g => typeof g.name === "string" ? g.name : (g.name[lang] || g.name.ru || g.name.en);
+
+async function loadGifts(){
+  try { GIFTS = await (await fetch("gifts.json", {cache:"no-store"})).json(); } catch(e){ GIFTS = []; }
+  await loadReserved();
+}
+async function loadReserved(){
+  try {
+    const r = await fetch("/api/gifts", {cache:"no-store"});
+    if (!r.ok) throw 0;
+    RESERVED = new Set((await r.json()).reserved); apiOk = true;
+  } catch(e){ apiOk = false; }
+  renderGifts();
+}
+
 function renderGifts(){
-  const box = document.getElementById("giftList"), list = window.GIFTS || [];
-  if (!list.length){
+  const box = document.getElementById("giftList");
+  if (!GIFTS.length){
     box.innerHTML = `<div class="soon"><span class="emoji">🎁</span><h3>${T[lang].soonH}</h3><p>${T[lang].soonP}</p></div>`;
     return;
   }
-  box.innerHTML = `<div class="gifts">` + list.map(g => {
-    const name = typeof g.name === "string" ? g.name : (g.name[lang] || g.name.ru || g.name.en);
+  box.innerHTML = `<div class="gifts">` + GIFTS.map(g => {
+    const taken = RESERVED.has(g.id);
     const pic = g.image ? `style="background-image:url('${esc(g.image)}')"` : "";
-    return `<a class="gift" href="${esc(g.url)}" target="_blank" rel="noopener">
-      <div class="pic" ${pic}>${g.image ? "" : "🎁"}</div>
-      <div class="body"><span class="name">${esc(name)}</span>${g.price ? `<span class="price">${esc(g.price)}</span>` : ""}</div>
-      <div class="go">${T[lang].open} →</div></a>`;
+    const actions = taken
+      ? `<div class="tag">${T[lang].reservedTag}</div>`
+      : `<div class="acts">${g.url ? `<a class="view" href="${esc(g.url)}" target="_blank" rel="noopener">${T[lang].open}</a>` : ""}${apiOk ? `<button class="res" data-id="${esc(g.id)}">${T[lang].reserve}</button>` : ""}</div>`;
+    return `<div class="gift${taken ? " taken" : ""}">
+      <div class="pic" ${pic}>${g.image ? "" : esc(g.emoji || "🎁")}</div>
+      <div class="body"><span class="name">${esc(gName(g))}</span>${g.price ? `<span class="price">${esc(g.price)}</span>` : ""}</div>
+      ${actions}</div>`;
   }).join("") + `</div>`;
+  box.querySelectorAll(".res").forEach(b => b.onclick = () => openModal(b.dataset.id));
 }
+
+const modal = document.getElementById("modal"), form = document.getElementById("resForm"), fName = form.elements.namedItem("name"), fEmail = form.elements.namedItem("email"), okBox = document.getElementById("resOk"), err = document.getElementById("mErr");
+function openModal(id){
+  current = GIFTS.find(g => g.id === id); if (!current) return;
+  document.getElementById("mGift").textContent = gName(current);
+  document.getElementById("mEmoji").textContent = current.emoji || "🎁";
+  err.textContent = ""; form.hidden = false; okBox.hidden = true;
+  try { fName.value = localStorage.getItem("guestName") || ""; fEmail.value = localStorage.getItem("guestEmail") || ""; } catch(e){}
+  modal.hidden = false; setTimeout(() => (fName.value ? fEmail : fName).focus(), 50);
+}
+function closeModal(){ modal.hidden = true; }
+modal.addEventListener("click", e => { if (e.target === modal || e.target.closest("[data-close]")) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) closeModal(); });
+
+form.onsubmit = async e => {
+  e.preventDefault();
+  const name = fName.value.trim(), email = fEmail.value.trim();
+  if (!name) { err.textContent = T[lang].eName; return fName.focus(); }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.textContent = T[lang].eEmail; return fEmail.focus(); }
+  const send = document.getElementById("mSend"); send.disabled = true; err.textContent = "";
+  try {
+    const r = await fetch("/api/reserve", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({giftId:current.id, name, email, lang})});
+    const d = await r.json().catch(() => ({}));
+    if (r.status === 409) { err.textContent = T[lang].eTaken; loadReserved(); return; }
+    if (!r.ok) { err.textContent = d.error === "email" ? T[lang].eEmail : d.error === "name" ? T[lang].eName : T[lang].eServer; return; }
+    try { localStorage.setItem("guestName", name); localStorage.setItem("guestEmail", email); } catch(e){}
+    const dev = document.getElementById("devPreview");
+    dev.hidden = !d.preview; if (d.preview) dev.href = d.preview;
+    form.hidden = true; okBox.hidden = false;
+    RESERVED.add(current.id); renderGifts();
+  } catch(e2){ err.textContent = T[lang].eServer; }
+  finally { send.disabled = false; }
+};
+document.addEventListener("visibilitychange", () => { if (!document.hidden && apiOk) loadReserved(); });
 
 /* confetti */
 (() => {
@@ -332,6 +433,7 @@ const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting)
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
 setLang(lang);
+loadGifts();
 </script>
 </body>
 </html>
