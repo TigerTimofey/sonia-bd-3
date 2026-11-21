@@ -1,0 +1,6 @@
+.env
+.env.*
+server.js
+data
+.outbox
+node_modules
