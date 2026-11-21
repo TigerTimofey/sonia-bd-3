@@ -76,6 +76,11 @@
   .btn:hover{transform:translateY(2px);box-shadow:0 4px 0 #e06a90}
   .btn.alt{background:#fff;color:var(--ink);box-shadow:0 6px 0 #e7dcef}
   .btn.alt:hover{box-shadow:0 4px 0 #e7dcef}
+  .cal{position:relative}
+  .cal-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:6px;min-width:220px;z-index:5;display:flex;flex-direction:column}
+  .cal-menu[hidden]{display:none}
+  .cal-menu a{padding:12px 14px;border-radius:12px;text-decoration:none;font-weight:800;white-space:nowrap}
+  .cal-menu a:hover{background:var(--pink-soft)}
 
   /* ---------- countdown ---------- */
   .countdown{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
@@ -156,7 +161,14 @@
     </div>
     <div class="actions reveal">
       <a class="btn" id="mapBtn" target="_blank" rel="noopener"><span>🗺️</span><span data-t="route"></span></a>
-      <button class="btn alt" id="icsBtn"><span>📆</span><span data-t="calendar"></span></button>
+      <div class="cal">
+        <button class="btn alt" id="icsBtn" aria-haspopup="true"><span>📆</span><span data-t="calendar"></span> ▾</button>
+        <div class="cal-menu" id="calMenu" hidden>
+          <a id="calGoogle" target="_blank" rel="noopener">📅 Google Calendar</a>
+          <a id="calApple">🍏 iPhone / Apple</a>
+          <a id="calOutlook" target="_blank" rel="noopener">📧 Outlook</a>
+        </div>
+      </div>
       <a class="btn alt" href="#gifts"><span>🎁</span><span data-t="toGifts"></span></a>
     </div>
   </section>
@@ -249,21 +261,26 @@ function setLang(l){
   try { localStorage.setItem("lang", l); } catch(e){}
   document.querySelectorAll("[data-t]").forEach(el => { el.textContent = T[l][el.dataset.t] ?? ""; });
   document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("on", b.dataset.l === l));
-  renderGifts(); tick();
+  renderGifts(); tick(); updateCalLinks();
 }
 document.querySelectorAll(".lang button").forEach(b => b.onclick = () => setLang(b.dataset.l));
 
 /* map + calendar */
 document.getElementById("mapBtn").href = PARTY.map;
-document.getElementById("icsBtn").onclick = () => {
+const calMenu = document.getElementById("calMenu");
+document.getElementById("icsBtn").onclick = e => { e.stopPropagation(); calMenu.hidden = !calMenu.hidden; };
+document.addEventListener("click", () => { calMenu.hidden = true; });
+function updateCalLinks(){
   const f = d => new Date(d).toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
-  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//sonya-birthday//EN","BEGIN:VEVENT",
-    "UID:sonya-3-birthday-20261221@party","DTSTAMP:"+f(Date.now()),"DTSTART:"+f(PARTY.start),"DTEND:"+f(PARTY.end),
-    "SUMMARY:"+T[lang].icsTitle,"LOCATION:"+PARTY.place,"URL:"+location.href,"END:VEVENT","END:VCALENDAR"].join("\r\n");
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));
-  a.download = "sonya-birthday.ics"; a.click();
-};
+  const site = "https://sonia-bd-3.vercel.app";
+  document.getElementById("calGoogle").href = "https://calendar.google.com/calendar/render?" + new URLSearchParams({
+    action:"TEMPLATE", text:T[lang].icsTitle, dates:f(PARTY.start)+"/"+f(PARTY.end), location:PARTY.place, details:site, ctz:"Europe/Tallinn"
+  });
+  document.getElementById("calOutlook").href = "https://outlook.live.com/calendar/0/deeplink/compose?" + new URLSearchParams({
+    path:"/calendar/action/compose", rru:"addevent", subject:T[lang].icsTitle, startdt:PARTY.start, enddt:PARTY.end, location:PARTY.place, body:site
+  });
+  document.getElementById("calApple").href = "cal/sonya-" + lang + ".ics";
+}
 
 /* countdown */
 const start = new Date(PARTY.start), end = new Date(PARTY.end);
