@@ -3,12 +3,12 @@ VERSION:2.0
 PRODID:-//sonya-birthday//EN
 METHOD:PUBLISH
 BEGIN:VEVENT
-UID:sonya-3-birthday-20261221@sonia-bd-3.vercel.app
+UID:sonya-3-birthday-20261221@sonia-party.vercel.app
 DTSTAMP:20261121T120000Z
 DTSTART:20261221T160000Z
 DTEND:20261221T190000Z
 SUMMARY:Sonia's 3rd birthday
 LOCATION:Smile Park Pirita\, Tallinn
-URL:https://sonia-bd-3.vercel.app
+URL:https://sonia-party.vercel.app
 END:VEVENT
 END:VCALENDAR

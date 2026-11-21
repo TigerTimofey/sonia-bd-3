@@ -383,7 +383,7 @@ document.getElementById("icsBtn").onclick = e => { e.stopPropagation(); calMenu.
 document.addEventListener("click", () => { calMenu.hidden = true; });
 function updateCalLinks(){
   const f = d => new Date(d).toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
-  const site = "https://sonia-bd-3.vercel.app";
+  const site = "https://sonia-party.vercel.app";
   document.getElementById("calGoogle").href = "https://calendar.google.com/calendar/render?" + new URLSearchParams({
     action:"TEMPLATE", text:T[lang].icsTitle, dates:f(PARTY.start)+"/"+f(PARTY.end), location:PARTY.place, details:site, ctz:"Europe/Tallinn"
   });
