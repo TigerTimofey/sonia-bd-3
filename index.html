@@ -169,19 +169,7 @@
   .soon h3{font-size:26px;margin-top:8px}
   .soon p{color:var(--muted);margin-top:4px}
 
-  footer{position:relative;overflow:hidden;text-align:center;padding:48px 16px 64px;min-height:300px;display:flex;flex-direction:column;justify-content:center;color:var(--muted)}
-  .peek{position:absolute;right:0;bottom:0;width:clamp(150px,14vw,190px);aspect-ratio:586/910;transform:translateX(108%) rotate(4deg);transform-origin:100% 100%;transition:transform 1s cubic-bezier(.2,.9,.3,1.15);cursor:pointer;-webkit-tap-highlight-color:transparent}
-  .peek.in{transform:translateX(0) rotate(0)}
-  @media (max-width:860px){
-    body footer{text-align:left;padding:40px 160px 40px 20px;min-height:250px}
-    body footer .big{font-size:26px}
-    .peek{width:150px}
-  }
-  .peek.duck{transform:translateX(108%) rotate(4deg);transition:transform .35s ease-in}
-  .peek img,.peek svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-  .peek .iris{transition:transform .28s cubic-bezier(.3,.7,.4,1)}
-  .peek .lid{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0);transition:transform .07s linear}
-  .peek.blink .lid{transform:scaleY(1)}
+  footer{text-align:center;padding:48px 16px 64px;color:var(--muted)}
   footer .big{font-size:30px;color:var(--ink)}
 
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
@@ -213,7 +201,6 @@
     .actions{flex-direction:column;align-items:center}
     .actions>.btn,.cal,.cal>.btn{width:100%;max-width:320px;justify-content:center}
     section{padding:0 16px 56px 16px}
-
     .cd{min-width:72px}.cd b{font-size:34px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
@@ -293,34 +280,6 @@
   <footer>
     <div class="big" data-t="footer"></div>
     <p data-t="footerSub"></p>
-    <div class="peek" id="peek" aria-hidden="true">
-      <img src="img/peek.webp" alt="">
-      <svg viewBox="0 0 586 910" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="sclera" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7a49d"/><stop offset=".5" stop-color="#d9ccc8"/><stop offset="1" stop-color="#c2b0aa"/></linearGradient>
-          <radialGradient id="irisGrad"><stop offset="0" stop-color="#9fb3bd"/><stop offset=".6" stop-color="#6f8691"/><stop offset="1" stop-color="#36424a"/></radialGradient>
-          <linearGradient id="lidShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2418" stop-opacity=".75"/><stop offset="1" stop-color="#3a2418" stop-opacity="0"/></linearGradient>
-        </defs>
-        <clipPath id="eyeClip0"><polygon points="128,294 133,288 145,282 155,279 165,280 172,284 179,291 172,294 162,297 150,299 138,299 130,297"/></clipPath>
-      <g clip-path="url(#eyeClip0)">
-        <polygon points="128,294 133,288 145,282 155,279 165,280 172,284 179,291 172,294 162,297 150,299 138,299 130,297" fill="url(#sclera)"/>
-        <g class="iris" data-i="0"><g transform="translate(163 287)">
-          <circle r="9.5" fill="url(#irisGrad)"/><circle r="3.8" fill="#111"/><circle cx="2.6" cy="-2.8" r="1.6" fill="#fff" opacity=".9"/>
-        </g></g>
-        <rect x="126" y="274" width="55" height="7" fill="url(#lidShade)"/>
-        <rect class="lid" x="126" y="277" width="55" height="24" fill="#b98466"/>
-      </g>
-        <clipPath id="eyeClip1"><polygon points="257,262 262,256 270,252 280,249 290,248 297,249 302,252 304,254 300,260 292,264 282,266 270,267 262,266"/></clipPath>
-      <g clip-path="url(#eyeClip1)">
-        <polygon points="257,262 262,256 270,252 280,249 290,248 297,249 302,252 304,254 300,260 292,264 282,266 270,267 262,266" fill="url(#sclera)"/>
-        <g class="iris" data-i="1"><g transform="translate(290 255)">
-          <circle r="9.5" fill="url(#irisGrad)"/><circle r="3.8" fill="#111"/><circle cx="2.6" cy="-2.8" r="1.6" fill="#fff" opacity=".9"/>
-        </g></g>
-        <rect x="255" y="243" width="51" height="7" fill="url(#lidShade)"/>
-        <rect class="lid" x="255" y="246" width="51" height="23" fill="#b98466"/>
-      </g>
-      </svg>
-    </div>
   </footer>
 </main>
 
@@ -624,57 +583,6 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden && ap
     if (!combo(e) && document.hasFocus()) setTimeout(off, 300);
   }, true);
   ["pointerdown","mousemove","touchstart"].forEach(ev => document.addEventListener(ev, () => { if (!sh.hidden && document.hasFocus()) off(); }, { passive:true }));
-})();
-
-/* peeking guy at the bottom: eyes follow the pointer / finger, wander when idle, blink */
-(() => {
-  const peek = document.getElementById("peek"); if (!peek) return;
-  const svg = peek.querySelector("svg"), irises = [...peek.querySelectorAll(".iris")];
-  const EYES = [{ cx:153, cy:290, rx:13, ry:4 }, { cx:280, cy:257, rx:12, ry:4 }];   // eye centres in image units
-  const REST = [{ x:163, y:287 }, { x:290, y:255 }];                                   // where the irises are drawn
-  let lastInput = 0;
-  function look(nx, ny){ // nx, ny in [-1, 1]
-    irises.forEach((g, i) => {
-      const e = EYES[i], r = REST[i];
-      const tx = e.cx + nx * e.rx - r.x, ty = e.cy + ny * e.ry - r.y;
-      g.style.transform = `translate(${tx}px, ${ty}px)`;
-    });
-  }
-  function lookAt(x, y){
-    const b = svg.getBoundingClientRect(), k = b.width / 586;
-    const ex = b.left + 216 * k, ey = b.top + 273 * k;   // between the eyes
-    const dx = x - ex, dy = y - ey, d = Math.hypot(dx, dy) || 1, f = Math.min(1, d / 160);
-    look(dx / d * f, dy / d * f);
-  }
-  const onPoint = (x, y) => { lastInput = Date.now(); lookAt(x, y); };
-  document.addEventListener("pointermove", e => onPoint(e.clientX, e.clientY), { passive:true });
-  document.addEventListener("touchstart", e => { const t = e.touches[0]; if (t) onPoint(t.clientX, t.clientY); }, { passive:true });
-  document.addEventListener("touchmove", e => { const t = e.touches[0]; if (t) onPoint(t.clientX, t.clientY); }, { passive:true });
-
-  // idle: glance around, sometimes at the "3"
-  (function wander(){
-    if (Date.now() - lastInput > 2500){
-      const three = document.querySelector(".three");
-      if (three && Math.random() < .3){ const r = three.getBoundingClientRect(); lookAt(r.left + r.width/2, r.top + r.height/2); }
-      else look(Math.random()*2 - 1, Math.random()*1.6 - .9);
-    }
-    setTimeout(wander, 900 + Math.random()*1800);
-  })();
-  (function blink(){
-    peek.classList.add("blink"); setTimeout(() => peek.classList.remove("blink"), 140);
-    if (Math.random() < .2) setTimeout(() => { peek.classList.add("blink"); setTimeout(() => peek.classList.remove("blink"), 120); }, 280);
-    setTimeout(blink, 2500 + Math.random()*3500);
-  })();
-
-  // slide in when the bottom of the page comes into view, hide again when scrolled away
-  new IntersectionObserver(es => es.forEach(e => peek.classList.toggle("in", e.isIntersecting)), { threshold:.35 }).observe(peek.parentElement);
-  // tap: he ducks behind the edge and peeks out again
-  peek.parentElement.addEventListener("click", e => {
-    if (!e.target.closest(".peek")) return;
-    peek.classList.add("duck");
-    setTimeout(() => peek.classList.remove("duck"), 1400 + Math.random()*900);
-  });
-  peek.style.pointerEvents = "auto";
 })();
 
 /* confetti */
