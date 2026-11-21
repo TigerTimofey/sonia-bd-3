@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Соне 3 года! · Sonya 3</title>
+<meta name="description" content="Приглашение на день рождения Сони — 21.12.2026, 18:00, Smile Park Pirita">
+<meta property="og:title" content="Соне 3 года! 🎂">
+<meta property="og:description" content="21.12.2026 · 18:00 · Smile Park Pirita">
+<meta property="og:image" content="img/sonya.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fff8f3; --ink:#3b2f4a; --muted:#7a6d88;
+    --pink:#ff8fb1; --pink-soft:#ffe1ea; --blue:#8ec5ff; --blue-soft:#e3f1ff;
+    --yellow:#ffd66b; --mint:#9fe3c9; --lilac:#c9b6ff;
+    --card:#ffffff; --shadow:0 10px 30px rgba(120,80,140,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Nunito",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;overflow-x:hidden}
+  h1,h2,h3,.big{font-family:"Baloo 2",cursive}
+  a{color:inherit}
+
+  /* ---------- language switch ---------- */
+  .lang{position:fixed;top:14px;right:14px;z-index:20;display:flex;gap:4px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);padding:4px;border-radius:999px;box-shadow:var(--shadow)}
+  .lang button{border:0;background:transparent;font:800 14px "Nunito";padding:7px 12px;border-radius:999px;cursor:pointer;color:var(--muted)}
+  .lang button.on{background:var(--pink);color:#fff}
+
+  /* ---------- confetti bg ---------- */
+  .confetti{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .confetti i{position:absolute;top:-20px;width:10px;height:14px;border-radius:3px;opacity:.7;animation:fall linear infinite}
+  @keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+
+  main{position:relative;z-index:1}
+  section{padding:72px 16px;max-width:980px;margin:0 auto}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:min(100svh,860px);display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:24px;padding-top:80px}
+  .hero-text .kicker{display:inline-block;background:var(--pink-soft);color:#d4507a;font-weight:800;padding:6px 14px;border-radius:999px;font-size:15px}
+  .hero-text h1{font-size:clamp(48px,8vw,76px);line-height:.95;margin:18px 0 10px;color:var(--ink)}
+  .hero-text h1 .name{color:var(--pink);display:block}
+  .three{display:inline-grid;place-items:center;width:1.25em;height:1.25em;border-radius:50%;background:var(--yellow);color:var(--ink);transform:rotate(-8deg);box-shadow:0 6px 0 #f1b93a}
+  .hero-text p{font-size:20px;color:var(--muted);max-width:30ch}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .chip{background:#fff;border-radius:16px;padding:10px 16px;box-shadow:var(--shadow);font-weight:800}
+  .chip small{display:block;font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  .hero-photo{position:relative;display:grid;place-items:center;min-width:0}
+  .hero-text{min-width:0}
+  .hero-photo::before{content:"";position:absolute;width:88%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--pink-soft),var(--blue-soft));z-index:-1;top:12%}
+  .hero-photo img{width:100%;max-width:440px;height:auto;filter:drop-shadow(0 20px 30px rgba(120,80,140,.18));animation:bob 4s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-10px)}}
+  .balloon{position:absolute;font-size:46px;animation:float 6s ease-in-out infinite}
+  .balloon.b1{left:0;top:8%}.balloon.b2{right:2%;top:28%;animation-delay:-2s}.balloon.b3{left:6%;bottom:16%;animation-delay:-4s;font-size:38px}
+  @keyframes float{50%{transform:translateY(-18px) rotate(6deg)}}
+  .scroll-hint{display:inline-flex;align-items:center;gap:8px;margin-top:28px;text-decoration:none;font-weight:800;color:#d4507a}
+
+  /* ---------- section titles ---------- */
+  .title{text-align:center;margin-bottom:36px}
+  .title h2{font-size:clamp(32px,5vw,46px);line-height:1.1}
+  .title p{color:var(--muted);margin-top:6px;font-size:18px}
+
+  /* ---------- details ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+  .card{background:var(--card);border-radius:24px;padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .card .ico{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-size:28px;margin-bottom:14px}
+  .card h3{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:"Nunito";font-weight:800}
+  .card .big{font-size:28px;font-weight:800;line-height:1.15;margin-top:4px}
+  .card .sub{color:var(--muted);margin-top:4px}
+  .c1 .ico{background:var(--pink-soft)} .c2 .ico{background:var(--blue-soft)} .c3 .ico{background:#fff3cf} .c4 .ico{background:#e2f8ef}
+
+  .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font:800 17px "Nunito";padding:14px 22px;border-radius:999px;background:var(--pink);color:#fff;box-shadow:0 6px 0 #e06a90;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(2px);box-shadow:0 4px 0 #e06a90}
+  .btn.alt{background:#fff;color:var(--ink);box-shadow:0 6px 0 #e7dcef}
+  .btn.alt:hover{box-shadow:0 4px 0 #e7dcef}
+
+  /* ---------- countdown ---------- */
+  .countdown{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+  .cd{background:#fff;border-radius:22px;box-shadow:var(--shadow);min-width:96px;padding:16px 10px;text-align:center}
+  .cd b{display:block;font:800 44px/1 "Baloo 2";color:var(--pink)}
+  .cd span{color:var(--muted);font-weight:700;font-size:14px}
+  .cd:nth-child(2) b{color:#5aa6f5}.cd:nth-child(3) b{color:#e9a60c}.cd:nth-child(4) b{color:#3dbf8f}
+  .party-now{text-align:center;font:800 32px "Baloo 2";color:var(--pink)}
+
+  /* ---------- gifts ---------- */
+  .gifts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+  .gift{background:#fff;border-radius:22px;box-shadow:var(--shadow);overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform .2s}
+  .gift:hover{transform:translateY(-4px) rotate(-.5deg)}
+  .gift .pic{aspect-ratio:4/3;background:var(--blue-soft) center/cover no-repeat;display:grid;place-items:center;font-size:56px}
+  .gift .body{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .gift .name{font-weight:800}
+  .gift .price{color:var(--muted);font-weight:700;white-space:nowrap}
+  .gift .go{margin:0 18px 18px;text-align:center;background:var(--pink-soft);color:#d4507a;font-weight:800;border-radius:999px;padding:9px}
+  .soon{background:#fff;border:3px dashed var(--lilac);border-radius:26px;padding:40px 20px;text-align:center}
+  .soon .emoji{font-size:64px;display:block;animation:wiggle 2.4s ease-in-out infinite}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+  .soon h3{font-size:26px;margin-top:8px}
+  .soon p{color:var(--muted);margin-top:4px}
+
+  footer{text-align:center;padding:48px 16px 64px;color:var(--muted)}
+  footer .big{font-size:30px;color:var(--ink)}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:760px){
+    .hero{grid-template-columns:1fr;text-align:center;padding-top:72px;gap:0}
+    .hero-photo{order:-1}
+    .hero-photo img{max-width:300px}
+    .hero-text p{margin:0 auto}
+    .chips{justify-content:center}
+    section{padding:56px 16px}
+    .cd{min-width:72px}.cd b{font-size:34px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="lang" role="group" aria-label="Language">
+  <button data-l="ru">RU</button><button data-l="et">ET</button><button data-l="en">EN</button>
+</div>
+<div class="confetti" aria-hidden="true"></div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <span class="kicker" data-t="kicker"></span>
+      <h1><span data-t="h1a"></span> <span class="name" data-t="name"></span><span data-t="h1b"></span> <span class="three">3</span></h1>
+      <p data-t="lead"></p>
+      <div class="chips">
+        <div class="chip"><small data-t="chipDate"></small>21.12.2026</div>
+        <div class="chip"><small data-t="chipTime"></small>18:00 – 21:00</div>
+        <div class="chip"><small data-t="chipPlace"></small>Smile Park Pirita</div>
+      </div>
+      <a class="scroll-hint" href="#details"><span data-t="more"></span> ↓</a>
+    </div>
+    <div class="hero-photo">
+      <span class="balloon b1">🎈</span><span class="balloon b2">🎀</span><span class="balloon b3">🎈</span>
+      <img src="img/sonya.webp" alt="Соня / Sonya">
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section id="details">
+    <div class="title reveal"><h2 data-t="detailsTitle"></h2><p data-t="detailsSub"></p></div>
+    <div class="grid">
+      <div class="card c1 reveal"><div class="ico">🎂</div><h3 data-t="whoH"></h3><div class="big" data-t="whoV"></div><div class="sub" data-t="whoS"></div></div>
+      <div class="card c2 reveal"><div class="ico">📅</div><h3 data-t="whenH"></h3><div class="big" data-t="whenV"></div><div class="sub" data-t="whenS"></div></div>
+      <div class="card c3 reveal"><div class="ico">⏰</div><h3 data-t="timeH"></h3><div class="big">18:00 – 21:00</div><div class="sub" data-t="timeS"></div></div>
+      <div class="card c4 reveal"><div class="ico">📍</div><h3 data-t="whereH"></h3><div class="big">Smile Park</div><div class="sub" data-t="whereS"></div></div>
+    </div>
+    <div class="actions reveal">
+      <a class="btn" id="mapBtn" target="_blank" rel="noopener"><span>🗺️</span><span data-t="route"></span></a>
+      <button class="btn alt" id="icsBtn"><span>📆</span><span data-t="calendar"></span></button>
+      <a class="btn alt" href="#gifts"><span>🎁</span><span data-t="toGifts"></span></a>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section>
+    <div class="title reveal"><h2 data-t="cdTitle"></h2></div>
+    <div class="countdown reveal" id="cd">
+      <div class="cd"><b id="cdD">0</b><span data-t="days"></span></div>
+      <div class="cd"><b id="cdH">0</b><span data-t="hours"></span></div>
+      <div class="cd"><b id="cdM">0</b><span data-t="mins"></span></div>
+      <div class="cd"><b id="cdS">0</b><span data-t="secs"></span></div>
+    </div>
+  </section>
+
+  <!-- GIFTS -->
+  <section id="gifts">
+    <div class="title reveal"><h2 data-t="giftsTitle"></h2><p data-t="giftsSub"></p></div>
+    <div id="giftList"></div>
+  </section>
+
+  <footer>
+    <div class="big" data-t="footer"></div>
+    <p data-t="footerSub"></p>
+  </footer>
+</main>
+
+<script src="gifts.js"></script>
+<script>
+/* ===== Настройки праздника ===== */
+const PARTY = {
+  start: "2026-12-21T18:00:00+02:00",
+  end:   "2026-12-21T21:00:00+02:00",
+  place: "Smile Park Pirita, Tallinn",
+  map:   "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Smile Park Pirita Tallinn")
+};
+
+const T = {
+  ru:{
+    kicker:"🎉 Приглашение на праздник", h1a:"Нашей", name:"Сонечке", h1b:"", lead:"Ждём тебя на весёлом дне рождения с играми, тортом и улыбками!",
+    chipDate:"Дата", chipTime:"Время", chipPlace:"Место", more:"Все подробности",
+    detailsTitle:"Где и когда", detailsSub:"Всё, что нужно знать гостям",
+    whoH:"К кому", whoV:"Соня", whoS:"Исполняется 3 годика 🎈",
+    whenH:"Когда", whenV:"21 декабря", whenS:"Понедельник, 2026",
+    timeH:"Время", timeS:"Начало в 18:00, окончание около 21:00",
+    whereH:"Где", whereS:"Игровая комната в Пирита, Таллинн",
+    route:"Маршрут", calendar:"В календарь", toGifts:"К подаркам",
+    cdTitle:"До праздника осталось", days:"дней", hours:"часов", mins:"минут", secs:"секунд", now:"Праздник уже идёт! 🎉", past:"Спасибо, что были с нами! 💖",
+    giftsTitle:"Идеи подарков 🎁", giftsSub:"Если хотите порадовать Соню — вот что ей понравится",
+    soonH:"Скоро здесь появится список", soonP:"Мы готовим идеи подарков — загляните чуть позже!", open:"Посмотреть",
+    footer:"Ждём вас! 💕", footerSub:"Соня и её семья", icsTitle:"День рождения Сони (3 года)"
+  },
+  et:{
+    kicker:"🎉 Kutse peole", h1a:"Meie", name:"Sonya", h1b:" saab", lead:"Ootame sind lõbusale sünnipäevapeole – mängud, tort ja palju naeru!",
+    chipDate:"Kuupäev", chipTime:"Kellaaeg", chipPlace:"Koht", more:"Kõik üksikasjad",
+    detailsTitle:"Kus ja millal", detailsSub:"Kõik, mida külalised peavad teadma",
+    whoH:"Kelle juurde", whoV:"Sonya", whoS:"Saab 3-aastaseks 🎈",
+    whenH:"Millal", whenV:"21. detsember", whenS:"Esmaspäev, 2026",
+    timeH:"Kellaaeg", timeS:"Algus kell 18:00, lõpp umbes 21:00",
+    whereH:"Kus", whereS:"Mängutuba Piritas, Tallinn",
+    route:"Teekond", calendar:"Lisa kalendrisse", toGifts:"Kingituste juurde",
+    cdTitle:"Peoni on jäänud", days:"päeva", hours:"tundi", mins:"minutit", secs:"sekundit", now:"Pidu käib! 🎉", past:"Aitäh, et olite meiega! 💖",
+    giftsTitle:"Kingiideed 🎁", giftsSub:"Kui soovite Sonyat rõõmustada – siin on, mis talle meeldiks",
+    soonH:"Nimekiri tuleb peagi", soonP:"Kogume kingiideid – vaadake veidi hiljem uuesti!", open:"Vaata",
+    footer:"Ootame teid! 💕", footerSub:"Sonya ja tema pere", icsTitle:"Sonya 3. sünnipäev"
+  },
+  en:{
+    kicker:"🎉 You're invited", h1a:"Our", name:"Sonya", h1b:" is turning", lead:"Join us for a fun birthday party with games, cake and lots of smiles!",
+    chipDate:"Date", chipTime:"Time", chipPlace:"Place", more:"All the details",
+    detailsTitle:"Where & when", detailsSub:"Everything guests need to know",
+    whoH:"Whose party", whoV:"Sonya", whoS:"Turning 3 🎈",
+    whenH:"When", whenV:"December 21", whenS:"Monday, 2026",
+    timeH:"Time", timeS:"Starts at 18:00, ends around 21:00",
+    whereH:"Where", whereS:"Kids' playroom in Pirita, Tallinn",
+    route:"Directions", calendar:"Add to calendar", toGifts:"Gift ideas",
+    cdTitle:"Party starts in", days:"days", hours:"hours", mins:"minutes", secs:"seconds", now:"The party is on! 🎉", past:"Thank you for celebrating with us! 💖",
+    giftsTitle:"Gift ideas 🎁", giftsSub:"If you'd like to make Sonya happy — here's what she'd love",
+    soonH:"The list is coming soon", soonP:"We're collecting gift ideas — check back a little later!", open:"View",
+    footer:"See you there! 💕", footerSub:"Sonya and her family", icsTitle:"Sonya's 3rd birthday"
+  }
+};
+// RU heading reads "Нашей Сонечке 3"; ET "Meie Sonya saab 3"; EN "Our Sonya is turning 3"
+
+let lang = "ru";
+try { lang = localStorage.getItem("lang") || (navigator.language||"ru").slice(0,2); } catch(e){}
+if (!T[lang]) lang = "ru";
+
+function setLang(l){
+  lang = l; document.documentElement.lang = l;
+  try { localStorage.setItem("lang", l); } catch(e){}
+  document.querySelectorAll("[data-t]").forEach(el => { el.textContent = T[l][el.dataset.t] ?? ""; });
+  document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("on", b.dataset.l === l));
+  renderGifts(); tick();
+}
+document.querySelectorAll(".lang button").forEach(b => b.onclick = () => setLang(b.dataset.l));
+
+/* map + calendar */
+document.getElementById("mapBtn").href = PARTY.map;
+document.getElementById("icsBtn").onclick = () => {
+  const f = d => new Date(d).toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//sonya-birthday//EN","BEGIN:VEVENT",
+    "UID:sonya-3-birthday-20261221@party","DTSTAMP:"+f(Date.now()),"DTSTART:"+f(PARTY.start),"DTEND:"+f(PARTY.end),
+    "SUMMARY:"+T[lang].icsTitle,"LOCATION:"+PARTY.place,"URL:"+location.href,"END:VEVENT","END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));
+  a.download = "sonya-birthday.ics"; a.click();
+};
+
+/* countdown */
+const start = new Date(PARTY.start), end = new Date(PARTY.end);
+function tick(){
+  const now = new Date(), box = document.getElementById("cd");
+  if (now >= end){ box.innerHTML = `<div class="party-now">${T[lang].past}</div>`; return; }
+  if (now >= start){ box.innerHTML = `<div class="party-now">${T[lang].now}</div>`; return; }
+  let s = Math.floor((start-now)/1000);
+  const set = (id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
+  set("cdD", Math.floor(s/86400)); s%=86400;
+  set("cdH", Math.floor(s/3600)); s%=3600;
+  set("cdM", Math.floor(s/60)); set("cdS", s%60);
+}
+setInterval(tick, 1000);
+
+/* gifts */
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function renderGifts(){
+  const box = document.getElementById("giftList"), list = window.GIFTS || [];
+  if (!list.length){
+    box.innerHTML = `<div class="soon"><span class="emoji">🎁</span><h3>${T[lang].soonH}</h3><p>${T[lang].soonP}</p></div>`;
+    return;
+  }
+  box.innerHTML = `<div class="gifts">` + list.map(g => {
+    const name = typeof g.name === "string" ? g.name : (g.name[lang] || g.name.ru || g.name.en);
+    const pic = g.image ? `style="background-image:url('${esc(g.image)}')"` : "";
+    return `<a class="gift" href="${esc(g.url)}" target="_blank" rel="noopener">
+      <div class="pic" ${pic}>${g.image ? "" : "🎁"}</div>
+      <div class="body"><span class="name">${esc(name)}</span>${g.price ? `<span class="price">${esc(g.price)}</span>` : ""}</div>
+      <div class="go">${T[lang].open} →</div></a>`;
+  }).join("") + `</div>`;
+}
+
+/* confetti */
+(() => {
+  const c = document.querySelector(".confetti"), cols = ["#ff8fb1","#8ec5ff","#ffd66b","#9fe3c9","#c9b6ff"];
+  for (let i=0;i<28;i++){
+    const p = document.createElement("i");
+    p.style.left = Math.random()*100+"vw";
+    p.style.background = cols[i%cols.length];
+    p.style.animationDuration = 8+Math.random()*10+"s";
+    p.style.animationDelay = -Math.random()*18+"s";
+    c.appendChild(p);
+  }
+})();
+
+/* reveal on scroll */
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }), {threshold:.15});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+setLang(lang);
+</script>
+</body>
+</html>
