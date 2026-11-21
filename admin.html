@@ -76,6 +76,9 @@
   .photo-pick input{position:absolute;inset:0;opacity:0;cursor:pointer}
   .photo-row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px}
   .grid3{display:grid;gap:10px}
+  .money{position:relative;display:block}
+  .money input{padding-right:34px}
+  .money .cur{position:absolute;right:14px;top:50%;transform:translateY(-50%);margin-top:2px;font-size:16px;font-weight:800;color:var(--muted);pointer-events:none}
   .grid2{display:grid;grid-template-columns:1fr 130px;gap:10px}
   .flag{display:inline-block;min-width:26px;padding:0 6px;margin-right:6px;border-radius:6px;background:var(--blue-soft);color:#2f78c4;font-size:11px;text-align:center}
   .foot{display:flex;justify-content:flex-end;gap:10px;margin-top:4px}
@@ -141,7 +144,7 @@
       </div>
       <div class="grid2">
         <label>Ссылка, где купить<input type="url" name="url" maxlength="600" placeholder="https://…" inputmode="url"></label>
-        <label>Сумма<input type="text" name="price" maxlength="30" placeholder="30 €"></label>
+        <label>Сумма<span class="money"><input type="text" name="price" maxlength="20" placeholder="30" inputmode="decimal" autocomplete="off"><span class="cur">€</span></span></label>
       </div>
       <p class="err" id="edErr"></p>
       <div class="foot">
@@ -248,7 +251,7 @@ function openEditor(g){
   form.elements.namedItem("et").value = g?.name?.et || "";
   form.elements.namedItem("en").value = g?.name?.en || "";
   form.elements.namedItem("url").value = g?.url || "";
-  form.elements.namedItem("price").value = g?.price || "";
+  form.elements.namedItem("price").value = (g?.price || "").replace(/\s*(€|eur|euro)\s*$/i, "").trim();
   $("photoInput").value = ""; $("photoInfo").textContent = ""; $("edErr").textContent = "";
   setPreview(g?.image || "");
   $("editorModal").hidden = false;
@@ -287,7 +290,8 @@ $("photoInput").onchange = async e => {
 form.onsubmit = async e => {
   e.preventDefault();
   const v = n => form.elements.namedItem(n).value.trim();
-  const gift = { id: editing?.id, name: { ru: v("ru"), et: v("et"), en: v("en") }, url: v("url"), price: v("price") };
+  const num = v("price").replace(/\s*(€|eur|euro)\s*$/i, "").trim();
+  const gift = { id: editing?.id, name: { ru: v("ru"), et: v("et"), en: v("en") }, url: v("url"), price: num ? num + " €" : "" };
   if (!gift.name.ru && !gift.name.et && !gift.name.en) { $("edErr").textContent = ERR.name; return; }
   if (gift.url && !/^https?:\/\//i.test(gift.url)) gift.url = "https://" + gift.url;
   if (newImage) gift.image = newImage; else if (removeImage) gift.removeImage = true;
