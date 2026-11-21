@@ -3,7 +3,7 @@ module.exports = {
   ru: {
     subject: g => `Вы забронировали подарок для Сони: ${g}`,
     hello: n => `Здравствуйте, ${n}!`,
-    booked: g => `Вы забронировали подарок <b>«${g}»</b> на день рождения Сони. Спасибо! 💕`,
+    booked: g => `Вы забронировали подарок <b>«${g}»</b> на день рождения Сони. Спасибо!`,
     when: "Ждём вас 21 декабря 2026 в 18:00 в Smile Park Pirita.",
     giftLink: "Посмотреть подарок",
     changed: "Передумали? Бронь можно отменить — подарок снова станет доступен другим гостям:",
@@ -19,7 +19,7 @@ module.exports = {
   et: {
     subject: g => `Broneerisid Soniale kingituse: ${g}`,
     hello: n => `Tere, ${n}!`,
-    booked: g => `Broneerisid Sonia sünnipäevaks kingituse <b>„${g}“</b>. Aitäh! 💕`,
+    booked: g => `Broneerisid Sonia sünnipäevaks kingituse <b>„${g}“</b>. Aitäh!`,
     when: "Ootame sind 21. detsembril 2026 kell 18:00 Smile Park Piritas.",
     giftLink: "Vaata kingitust",
     changed: "Mõtlesid ümber? Broneeringu saab tühistada – kingitus muutub teistele külalistele taas kättesaadavaks:",
@@ -35,7 +35,7 @@ module.exports = {
   en: {
     subject: g => `You reserved a gift for Sonia: ${g}`,
     hello: n => `Hi ${n}!`,
-    booked: g => `You reserved <b>“${g}”</b> for Sonia's birthday. Thank you! 💕`,
+    booked: g => `You reserved <b>“${g}”</b> for Sonia's birthday. Thank you!`,
     when: "See you on December 21, 2026 at 18:00 at Smile Park Pirita.",
     giftLink: "View the gift",
     changed: "Changed your mind? You can cancel the reservation and the gift becomes available to other guests again:",

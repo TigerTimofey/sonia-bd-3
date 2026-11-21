@@ -1,5 +1,4 @@
 const crypto = require("crypto");
-const GIFTS = require("../../gifts.json");
 
 const LANGS = ["ru", "et", "en"];
 const pickLang = l => (LANGS.includes(l) ? l : "ru");
@@ -9,12 +8,12 @@ function query(req) {
 }
 
 // Works with Vercel (pre-parsed req.body) and plain Node (raw stream).
-async function body(req) {
+async function body(req, limit = 1e5) {
   let raw = req.body;
   if (raw === undefined) {
     raw = await new Promise((ok, fail) => {
       let s = "";
-      req.on("data", c => { s += c; if (s.length > 1e5) req.destroy(); });
+      req.on("data", c => { s += c; if (s.length > limit) req.destroy(); });
       req.on("end", () => ok(s));
       req.on("error", fail);
     });
@@ -47,12 +46,11 @@ function siteUrl(req) {
 }
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const findGift = id => GIFTS.find(g => g.id === id);
-const giftName = (g, lang) => (typeof g.name === "string" ? g.name : g.name[lang] || g.name.ru || g.name.en);
+const giftName = (g, lang) => (typeof g.name === "string" ? g.name : g.name[lang] || g.name.ru || g.name.en || g.name.et);
 const newToken = () => crypto.randomBytes(18).toString("hex");
 function sameToken(a, b) {
   if (typeof a !== "string" || typeof b !== "string" || a.length !== b.length) return false;
   return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
 }
 
-module.exports = { GIFTS, pickLang, query, body, json, html, siteUrl, esc, findGift, giftName, newToken, sameToken };
+module.exports = { pickLang, query, body, json, html, siteUrl, esc, giftName, newToken, sameToken };

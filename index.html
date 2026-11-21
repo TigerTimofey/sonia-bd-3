@@ -2,10 +2,10 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Соне 3 года! · Sonia 3</title>
 <meta name="description" content="Приглашение на день рождения Сони — 21.12.2026, 18:00, Smile Park Pirita">
-<meta property="og:title" content="Соне 3 года! 🎂">
+<meta property="og:title" content="Соне 3 года!">
 <meta property="og:description" content="21.12.2026 · 18:00 · Smile Park Pirita">
 <meta property="og:image" content="img/sonya.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,10 @@
     --card:#ffffff; --shadow:0 10px 30px rgba(120,80,140,.12);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  img,svg{-webkit-user-drag:none;user-drag:none;pointer-events:none}
+  input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
   body{font-family:"Nunito",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;overflow-x:hidden}
   h1,h2,h3,.big{font-family:"Nunito",system-ui,sans-serif;font-weight:900;letter-spacing:-.01em}
   a{color:inherit}
@@ -35,14 +38,40 @@
   @keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
 
   main{position:relative;z-index:1}
-  section{padding:72px 16px;max-width:980px;margin:0 auto}
+  section{padding:0 16px 72px 16px;max-width:980px;margin:0 auto}
 
   /* ---------- hero ---------- */
   .hero{min-height:min(100svh,860px);display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:24px;padding-top:80px}
   .hero-text .kicker{display:inline-block;background:var(--pink-soft);color:#d4507a;font-weight:800;padding:6px 14px;border-radius:999px;font-size:15px}
   .hero-text h1{font-size:clamp(48px,8vw,76px);line-height:.95;margin:18px 0 10px;color:var(--ink)}
   .hero-text h1 .name{color:var(--pink);display:block}
-  .three{display:inline-grid;place-items:center;width:1.25em;height:1.25em;border-radius:50%;background:var(--yellow);color:var(--ink);transform:rotate(-8deg);box-shadow:0 6px 0 #f1b93a}
+  .photo-wrap{position:relative;width:100%;max-width:440px;animation:bob 4s ease-in-out infinite}
+  .three{position:absolute;left:50%;top:38%;width:42%;aspect-ratio:1;padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;z-index:2;animation:throwin 1.2s cubic-bezier(.18,.9,.32,1.15) both,toss 6s 1.2s ease-in-out infinite;will-change:transform}
+  .three:focus-visible .three-in{outline:3px solid var(--pink);outline-offset:4px}
+  .three-in{width:100%;height:100%;container-type:size;display:grid;place-items:center;border-radius:50%;background:var(--yellow);color:var(--ink);box-shadow:0 6px 0 #f1b93a,0 14px 24px rgba(120,80,140,.25);transition:background-color .5s,box-shadow .5s;user-select:none}
+  .three b{font-family:"Nunito",sans-serif;font-weight:900;font-size:64cqw;line-height:1;white-space:nowrap}
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+  .fx-p{position:absolute;left:0;top:0;will-change:transform,opacity}
+  .fx-bubble{position:absolute;left:0;top:0;background:#fff;color:#d4507a;font:900 22px "Nunito",sans-serif;padding:8px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(120,80,140,.25);white-space:nowrap}
+  .fx-ring{position:absolute;left:0;top:0;border-radius:50%;border:4px solid var(--pink)}
+  @keyframes throwin{
+    0%{transform:translate(-50%,260%) scale(.25) rotate(-540deg);opacity:0}
+    55%{transform:translate(-50%,-25%) scale(.85) rotate(-20deg);opacity:1}
+    75%{transform:translate(-50%,8%) scale(1.12,.88) rotate(-4deg)}
+    88%{transform:translate(-50%,-6%) scale(.96,1.05) rotate(-8deg)}
+    100%{transform:translate(-50%,0) scale(1) rotate(-6deg)}
+  }
+  @keyframes toss{
+    0%{transform:translate(-50%,0) rotate(-6deg)}
+    20%{transform:translate(-50%,-5%) rotate(4deg)}
+    40%{transform:translate(-50%,0) rotate(-6deg)}
+    50%{transform:translate(-50%,7%) scale(1.1,.88) rotate(-6deg);animation-timing-function:cubic-bezier(.2,.7,.4,1)}
+    66%{transform:translate(-50%,-28%) scale(.76) rotate(180deg);animation-timing-function:cubic-bezier(.5,0,.8,.4)}
+    82%{transform:translate(-50%,6%) scale(1.14,.86) rotate(354deg);animation-timing-function:ease-out}
+    90%{transform:translate(-50%,-6%) scale(.96,1.04) rotate(354deg);animation-timing-function:ease-in}
+    96%{transform:translate(-50%,2%) scale(1.04,.97) rotate(354deg)}
+    100%{transform:translate(-50%,0) rotate(354deg)}
+  }
   .hero-text p{font-size:20px;color:var(--muted);max-width:30ch}
   .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
   .chip{background:#fff;border-radius:16px;padding:10px 16px;box-shadow:var(--shadow);font-weight:800}
@@ -50,7 +79,7 @@
   .hero-photo{position:relative;display:grid;place-items:center;min-width:0}
   .hero-text{min-width:0}
   .hero-photo::before{content:"";position:absolute;width:min(88%,420px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--pink-soft),var(--blue-soft));z-index:-1;top:12%}
-  .hero-photo img{width:100%;max-width:440px;height:auto;filter:drop-shadow(0 20px 30px rgba(120,80,140,.18));animation:bob 4s ease-in-out infinite}
+  .hero-photo img{display:block;width:100%;height:auto;filter:drop-shadow(0 20px 30px rgba(120,80,140,.18))}
   @keyframes bob{50%{transform:translateY(-10px)}}
   .balloon{position:absolute;font-size:46px;animation:float 6s ease-in-out infinite}
   .balloon.b1{left:0;top:8%}.balloon.b2{right:2%;top:28%;animation-delay:-2s}.balloon.b3{left:6%;bottom:16%;animation-delay:-4s;font-size:38px}
@@ -65,13 +94,25 @@
   /* ---------- details ---------- */
   .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
   @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:520px){.grid{grid-template-columns:1fr}}
+  @media (max-width:520px){
+    .grid{grid-template-columns:1fr;gap:10px}
+    .grid .card{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:center;padding:12px 16px;border-radius:18px}
+    .grid .card .ico{grid-row:1/4;width:44px;height:44px;border-radius:14px;margin:0}
+    .grid .card .ico svg{width:22px;height:22px}
+    .grid .card h3{font-size:11px;line-height:1.2}
+    .grid .card .big{font-size:19px;margin-top:1px}
+    .grid .card .sub{font-size:13px;margin-top:1px;line-height:1.3}
+  }
   .card{background:var(--card);border-radius:24px;padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
   .card .ico{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-size:28px;margin-bottom:14px}
   .card h3{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:"Nunito";font-weight:800}
   .card .big{font-size:28px;font-weight:800;line-height:1.15;margin-top:4px}
   .card .sub{color:var(--muted);margin-top:4px}
-  .c1 .ico{background:var(--pink-soft)} .c2 .ico{background:var(--blue-soft)} .c3 .ico{background:#fff3cf} .c4 .ico{background:#e2f8ef}
+  .c1 .ico{background:var(--pink-soft);color:#d4507a} .c2 .ico{background:var(--blue-soft);color:#2f78c4} .c3 .ico{background:#fff3cf;color:#b8860b} .c4 .ico{background:#e2f8ef;color:#2a9d74}
+  .btn svg{flex:none}
+  .m-emoji{width:64px;height:64px;margin:0 auto 6px;border-radius:50%;background:var(--pink-soft);color:#d4507a;display:grid;place-items:center}
+  .gift .pic{color:#d4507a}
+  .soon .emoji{color:var(--lilac)}
 
   .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
   .btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font:800 17px "Nunito";padding:14px 22px;border-radius:999px;background:var(--pink);color:#fff;box-shadow:0 6px 0 #e06a90}
@@ -101,6 +142,7 @@
   .gift .view{background:var(--blue-soft);color:#2f78c4}
   .gift .res{order:-1;background:var(--pink);color:#fff;box-shadow:0 4px 0 #e06a90}
   .gift .acts a,.gift .acts button{font-size:16px;padding:13px 16px}
+  .gift .pic.photo{background-color:#fff;background-size:contain;background-origin:content-box;padding:14px}
   .gift.taken .pic{filter:grayscale(.7);opacity:.55}
   .gift .tag{margin:0 20px 20px;text-align:center;background:#f3eef8;color:var(--muted);font-weight:800;border-radius:999px;padding:12px}
   .modal{position:fixed;inset:0;z-index:50;background:rgba(59,47,74,.45);backdrop-filter:blur(4px);display:grid;place-items:center;padding:16px}
@@ -132,15 +174,31 @@
   .reveal.in{opacity:1;transform:none}
 
   @media (max-width:860px){
-    .hero{grid-template-columns:1fr;text-align:center;padding-top:72px;gap:0}
-    .hero-photo{order:-1}
-    .hero-photo img{max-width:300px}
-    .hero-photo::before{width:min(86%,320px);top:10%}
+    .lang{top:10px;right:0;gap:2px;padding:3px;border-radius:999px 0 0 999px}
+    .lang button{font-size:12px;padding:6px 10px}
+    .hero{min-height:0;padding-top:76px;column-gap:12px;row-gap:0;align-items:center;
+      grid-template-columns:minmax(0,1fr) 44%;
+      grid-template-areas:"kicker photo" "title photo" "lead lead" "chips chips" "more more"}
+    .hero-text{display:contents}
+    .hero-text .kicker{grid-area:kicker;align-self:end;justify-self:start;font-size:12px;padding:5px 11px;white-space:nowrap;position:relative;z-index:1}
+    .hero-text h1{grid-area:title;align-self:start;font-size:clamp(34px,10.5vw,60px);margin:12px 0 0}
+    .hero-text p{grid-area:lead;margin-top:18px;max-width:none;font-size:17px}
+    .chips{grid-area:chips;margin-top:18px}
+    .chip{flex:1 1 auto;padding:9px 12px}
+    .scroll-hint{grid-area:more;justify-self:start;margin-top:20px}
+    .hero-photo{grid-area:photo}
+    .photo-wrap{max-width:100%}
+    .hero-photo img{filter:drop-shadow(0 12px 18px rgba(120,80,140,.18))}
+    .hero-photo::before{width:100%;top:14%}
+  }
+  @media (min-width:600px) and (max-width:860px){
+    .hero{grid-template-areas:"kicker photo" "title photo" "lead photo" "chips photo" "more photo";align-content:center}
+    .hero-text h1{align-self:end}
+    .hero-text .kicker{font-size:14px}
+    .chips .chip{flex:0 1 auto}
     .actions{flex-direction:column;align-items:center}
     .actions>.btn,.cal,.cal>.btn{width:100%;max-width:320px;justify-content:center}
-    .hero-text p{margin:0 auto}
-    .chips{justify-content:center}
-    section{padding:56px 16px}
+    section{padding:0 16px 56px 16px}
     .cd{min-width:72px}.cd b{font-size:34px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
@@ -152,13 +210,14 @@
   <button data-l="ru">RU</button><button data-l="et">ET</button><button data-l="en">EN</button>
 </div>
 <div class="confetti" aria-hidden="true"></div>
+<div id="fx" aria-hidden="true"></div>
 
 <main>
   <!-- HERO -->
   <section class="hero">
     <div class="hero-text">
       <span class="kicker" data-t="kicker"></span>
-      <h1><span data-t="h1a"></span> <span class="name" data-t="name"></span><span data-t="h1b"></span> <span class="three">3</span></h1>
+      <h1><span data-t="h1a"></span> <span class="name" data-t="name"></span><span data-t="h1b"></span></h1>
       <p data-t="lead"></p>
       <div class="chips">
         <div class="chip"><small data-t="chipDate"></small>21.12.2026</div>
@@ -168,8 +227,10 @@
       <a class="scroll-hint" href="#details"><span data-t="more"></span> ↓</a>
     </div>
     <div class="hero-photo">
-      <span class="balloon b1">🎈</span><span class="balloon b2">🎀</span><span class="balloon b3">🎈</span>
-      <img src="img/sonya.webp" alt="Соня / Sonia">
+      <div class="photo-wrap">
+        <img src="img/sonya.webp" alt="Соня / Sonia">
+        <button type="button" class="three" aria-label="3"><span class="three-in"><b>3</b></span></button>
+      </div>
     </div>
   </section>
 
@@ -177,22 +238,22 @@
   <section id="details">
     <div class="title reveal"><h2 data-t="detailsTitle"></h2><p data-t="detailsSub"></p></div>
     <div class="grid">
-      <div class="card c1 reveal"><div class="ico">🎂</div><h3 data-t="whoH"></h3><div class="big" data-t="whoV"></div><div class="sub" data-t="whoS"></div></div>
-      <div class="card c2 reveal"><div class="ico">📅</div><h3 data-t="whenH"></h3><div class="big" data-t="whenV"></div><div class="sub" data-t="whenS"></div></div>
-      <div class="card c3 reveal"><div class="ico">⏰</div><h3 data-t="timeH"></h3><div class="big">18:00 – 21:00</div><div class="sub" data-t="timeS"></div></div>
-      <div class="card c4 reveal"><div class="ico">📍</div><h3 data-t="whereH"></h3><div class="big">Smile Park</div><div class="sub" data-t="whereS"></div></div>
+      <div class="card c1 reveal"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0 2-.7 2.5-.5"/><path d="M12 11V7"/><path d="M12 4.5c.8.8.8 1.7 0 2.5-.8-.8-.8-1.7 0-2.5z"/></svg></div><h3 data-t="whoH"></h3><div class="big" data-t="whoV"></div><div class="sub" data-t="whoS"></div></div>
+      <div class="card c2 reveal"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/></svg></div><h3 data-t="whenH"></h3><div class="big" data-t="whenV"></div><div class="sub" data-t="whenS"></div></div>
+      <div class="card c3 reveal"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3 data-t="timeH"></h3><div class="big">18:00 – 21:00</div><div class="sub" data-t="timeS"></div></div>
+      <div class="card c4 reveal"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div><h3 data-t="whereH"></h3><div class="big">Smile Park</div><div class="sub" data-t="whereS"></div></div>
     </div>
     <div class="actions reveal">
-      <a class="btn" id="mapBtn" target="_blank" rel="noopener"><span>🗺️</span><span data-t="route"></span></a>
+      <a class="btn alt" id="mapBtn" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5z"/><path d="M9 4v13M15 6.5v13"/></svg><span data-t="route"></span></a>
       <div class="cal">
-        <button class="btn alt" id="icsBtn" aria-haspopup="true"><span>📆</span><span data-t="calendar"></span> ▾</button>
+        <button class="btn alt" id="icsBtn" aria-haspopup="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M3 10h18M12 13v5M9.5 15.5h5"/></svg><span data-t="calendar"></span> ▾</button>
         <div class="cal-menu" id="calMenu" hidden>
-          <a id="calGoogle" target="_blank" rel="noopener">📅 Google Calendar</a>
-          <a id="calApple">🍏 iPhone / Apple</a>
-          <a id="calOutlook" target="_blank" rel="noopener">📧 Outlook</a>
+          <a id="calGoogle" target="_blank" rel="noopener">Google Calendar</a>
+          <a id="calApple">iPhone / Apple</a>
+          <a id="calOutlook" target="_blank" rel="noopener">Outlook</a>
         </div>
       </div>
-      <a class="btn alt" href="#gifts"><span>🎁</span><span data-t="toGifts"></span></a>
+      <a class="btn" href="#gifts"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8C10.5 4 7 4 7 6s3 2 5 2zM12 8c1.5-4 5-4 5-2s-3 2-5 2z"/></svg><span data-t="toGifts"></span></a>
     </div>
   </section>
 
@@ -222,7 +283,7 @@
 <div class="modal" id="modal" hidden>
   <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <form id="resForm" novalidate>
-      <div class="m-emoji" id="mEmoji">🎁</div>
+      <div class="m-emoji"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8C10.5 4 7 4 7 6s3 2 5 2zM12 8c1.5-4 5-4 5-2s-3 2-5 2z"/></svg></div>
       <h3 id="mTitle" data-t="mTitle"></h3>
       <p class="m-gift" id="mGift"></p>
       <label><span data-t="mName"></span><input name="name" maxlength="60" autocomplete="name" required></label>
@@ -235,7 +296,7 @@
       </div>
     </form>
     <div id="resOk" hidden>
-      <div class="m-emoji">💌</div>
+      <div class="m-emoji"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></div>
       <h3 data-t="okTitle"></h3>
       <p class="m-ok" data-t="okText"></p>
       <p><a id="devPreview" target="_blank" hidden data-t="devPreview"></a></p>
@@ -255,46 +316,46 @@ const PARTY = {
 
 const T = {
   ru:{
-    kicker:"🎉 Приглашение на праздник", h1a:"Нашей", name:"Сонечке", h1b:" уже", lead:"Ждём тебя на весёлом дне рождения с играми, тортом и улыбками!",
+    kicker:"Приглашение на праздник", h1a:"Нашей", name:"Сонечке", h1b:"уже 3!", lead:"Ждём тебя на весёлом дне рождения с играми, тортом и улыбками!",
     chipDate:"Дата", chipTime:"Время", chipPlace:"Место", more:"Все подробности",
     detailsTitle:"Где и когда", detailsSub:"Всё, что нужно знать гостям",
-    whoH:"К кому", whoV:"Соня", whoS:"Исполняется 3 годика 🎈",
+    whoH:"К кому", whoV:"Соня", whoS:"Исполняется 3 годика",
     whenH:"Когда", whenV:"21 декабря", whenS:"Понедельник, 2026",
     timeH:"Время", timeS:"Начало в 18:00, окончание около 21:00",
     whereH:"Где", whereS:"Игровая комната в Пирита, Таллинн",
     route:"Маршрут", calendar:"В календарь", toGifts:"К подаркам",
-    cdTitle:"До праздника осталось", days:"дней", hours:"часов", mins:"минут", secs:"секунд", now:"Праздник уже идёт! 🎉", past:"Спасибо, что были с нами! 💖",
-    giftsTitle:"Идеи подарков 🎁", giftsSub:"Если хотите порадовать Соню — вот что ей понравится",
-    soonH:"Скоро здесь появится список", soonP:"Мы готовим идеи подарков — загляните чуть позже!", open:"Посмотреть", reserve:"Забронировать", reservedTag:"Забронировано", mTitle:"Забронировать подарок", mName:"Ваше имя", mEmail:"Ваша почта", mHint:"Мы пришлём подтверждение и ссылку для отмены брони.", mSend:"Забронировать", mCancel:"Отмена", okTitle:"Готово! 🎉", okText:"Подарок забронирован. Проверьте почту — там подтверждение и ссылка для отмены.", okClose:"Хорошо", eName:"Введите имя", eEmail:"Проверьте адрес почты", eTaken:"Упс, этот подарок только что забронировал кто-то другой.", eServer:"Не получилось — попробуйте ещё раз чуть позже.", devPreview:"Открыть письмо (тест)",
-    footer:"Ждём вас! 💕", footerSub:"Соня и её семья", icsTitle:"День рождения Сони (3 года)"
+    cdTitle:"До праздника осталось", days:"дней", hours:"часов", mins:"минут", secs:"секунд", now:"Праздник уже идёт!", past:"Спасибо, что были с нами!",
+    giftsTitle:"Идеи подарков", giftsSub:"Если хотите порадовать Соню — вот что ей понравится",
+    soonH:"Скоро здесь появится список", soonP:"Мы готовим идеи подарков — загляните чуть позже!", open:"Посмотреть", reserve:"Забронировать", reservedTag:"Забронировано", mTitle:"Забронировать подарок", mName:"Ваше имя", mEmail:"Ваша почта", mHint:"Мы пришлём подтверждение и ссылку для отмены брони.", mSend:"Забронировать", mCancel:"Отмена", okTitle:"Готово!", okText:"Подарок забронирован. Проверьте почту — там подтверждение и ссылка для отмены.", okClose:"Хорошо", eName:"Введите имя", eEmail:"Проверьте адрес почты", eTaken:"Упс, этот подарок только что забронировал кто-то другой.", eServer:"Не получилось — попробуйте ещё раз чуть позже.", devPreview:"Открыть письмо (тест)",
+    footer:"Ждём вас!", footerSub:"Соня и её семья", icsTitle:"День рождения Сони (3 года)"
   },
   et:{
-    kicker:"🎉 Kutse peole", h1a:"Meie", name:"Sonia", h1b:" saab", lead:"Ootame sind lõbusale sünnipäevapeole – mängud, tort ja palju naeru!",
+    kicker:"Kutse peole", h1a:"Meie", name:"Sonia", h1b:"saab 3!", lead:"Ootame sind lõbusale sünnipäevapeole – mängud, tort ja palju naeru!",
     chipDate:"Kuupäev", chipTime:"Kellaaeg", chipPlace:"Koht", more:"Kõik üksikasjad",
     detailsTitle:"Kus ja millal", detailsSub:"Kõik, mida külalised peavad teadma",
-    whoH:"Kelle juurde", whoV:"Sonia", whoS:"Saab 3-aastaseks 🎈",
+    whoH:"Kelle juurde", whoV:"Sonia", whoS:"Saab 3-aastaseks",
     whenH:"Millal", whenV:"21. detsember", whenS:"Esmaspäev, 2026",
     timeH:"Kellaaeg", timeS:"Algus kell 18:00, lõpp umbes 21:00",
     whereH:"Kus", whereS:"Mängutuba Piritas, Tallinn",
     route:"Teekond", calendar:"Lisa kalendrisse", toGifts:"Kingituste juurde",
-    cdTitle:"Peoni on jäänud", days:"päeva", hours:"tundi", mins:"minutit", secs:"sekundit", now:"Pidu käib! 🎉", past:"Aitäh, et olite meiega! 💖",
-    giftsTitle:"Kingiideed 🎁", giftsSub:"Kui soovite Soniat rõõmustada – siin on, mis talle meeldiks",
-    soonH:"Nimekiri tuleb peagi", soonP:"Kogume kingiideid – vaadake veidi hiljem uuesti!", open:"Vaata", reserve:"Broneeri", reservedTag:"Broneeritud", mTitle:"Broneeri kingitus", mName:"Sinu nimi", mEmail:"Sinu e-post", mHint:"Saadame kinnituse ja lingi broneeringu tühistamiseks.", mSend:"Broneeri", mCancel:"Loobu", okTitle:"Valmis! 🎉", okText:"Kingitus on broneeritud. Vaata oma postkasti – seal on kinnitus ja tühistamise link.", okClose:"Selge", eName:"Sisesta nimi", eEmail:"Kontrolli e-posti aadressi", eTaken:"Oih, keegi broneeris selle kingituse just praegu.", eServer:"Ei õnnestunud – proovi veidi hiljem uuesti.", devPreview:"Ava kiri (test)",
-    footer:"Ootame teid! 💕", footerSub:"Sonia ja tema pere", icsTitle:"Sonia 3. sünnipäev"
+    cdTitle:"Peoni on jäänud", days:"päeva", hours:"tundi", mins:"minutit", secs:"sekundit", now:"Pidu käib!", past:"Aitäh, et olite meiega!",
+    giftsTitle:"Kingiideed", giftsSub:"Kui soovite Soniat rõõmustada – siin on, mis talle meeldiks",
+    soonH:"Nimekiri tuleb peagi", soonP:"Kogume kingiideid – vaadake veidi hiljem uuesti!", open:"Vaata", reserve:"Broneeri", reservedTag:"Broneeritud", mTitle:"Broneeri kingitus", mName:"Sinu nimi", mEmail:"Sinu e-post", mHint:"Saadame kinnituse ja lingi broneeringu tühistamiseks.", mSend:"Broneeri", mCancel:"Loobu", okTitle:"Valmis!", okText:"Kingitus on broneeritud. Vaata oma postkasti – seal on kinnitus ja tühistamise link.", okClose:"Selge", eName:"Sisesta nimi", eEmail:"Kontrolli e-posti aadressi", eTaken:"Oih, keegi broneeris selle kingituse just praegu.", eServer:"Ei õnnestunud – proovi veidi hiljem uuesti.", devPreview:"Ava kiri (test)",
+    footer:"Ootame teid!", footerSub:"Sonia ja tema pere", icsTitle:"Sonia 3. sünnipäev"
   },
   en:{
-    kicker:"🎉 You're invited", h1a:"Our", name:"Sonia", h1b:" is turning", lead:"Join us for a fun birthday party with games, cake and lots of smiles!",
+    kicker:"You're invited", h1a:"Our", name:"Sonia", h1b:"is turning 3!", lead:"Join us for a fun birthday party with games, cake and lots of smiles!",
     chipDate:"Date", chipTime:"Time", chipPlace:"Place", more:"All the details",
     detailsTitle:"Where & when", detailsSub:"Everything guests need to know",
-    whoH:"Whose party", whoV:"Sonia", whoS:"Turning 3 🎈",
+    whoH:"Whose party", whoV:"Sonia", whoS:"Turning 3",
     whenH:"When", whenV:"December 21", whenS:"Monday, 2026",
     timeH:"Time", timeS:"Starts at 18:00, ends around 21:00",
     whereH:"Where", whereS:"Kids' playroom in Pirita, Tallinn",
     route:"Directions", calendar:"Add to calendar", toGifts:"Gift ideas",
-    cdTitle:"Party starts in", days:"days", hours:"hours", mins:"minutes", secs:"seconds", now:"The party is on! 🎉", past:"Thank you for celebrating with us! 💖",
-    giftsTitle:"Gift ideas 🎁", giftsSub:"If you'd like to make Sonia happy — here's what she'd love",
-    soonH:"The list is coming soon", soonP:"We're collecting gift ideas — check back a little later!", open:"View", reserve:"Reserve", reservedTag:"Reserved", mTitle:"Reserve a gift", mName:"Your name", mEmail:"Your e-mail", mHint:"We'll send a confirmation and a link to cancel the reservation.", mSend:"Reserve", mCancel:"Cancel", okTitle:"Done! 🎉", okText:"The gift is reserved. Check your inbox for the confirmation and cancel link.", okClose:"OK", eName:"Please enter your name", eEmail:"Please check your e-mail address", eTaken:"Oops, someone has just reserved this gift.", eServer:"Something went wrong — please try again later.", devPreview:"Open the e-mail (test)",
-    footer:"See you there! 💕", footerSub:"Sonia and her family", icsTitle:"Sonia's 3rd birthday"
+    cdTitle:"Party starts in", days:"days", hours:"hours", mins:"minutes", secs:"seconds", now:"The party is on!", past:"Thank you for celebrating with us!",
+    giftsTitle:"Gift ideas", giftsSub:"If you'd like to make Sonia happy — here's what she'd love",
+    soonH:"The list is coming soon", soonP:"We're collecting gift ideas — check back a little later!", open:"View", reserve:"Reserve", reservedTag:"Reserved", mTitle:"Reserve a gift", mName:"Your name", mEmail:"Your e-mail", mHint:"We'll send a confirmation and a link to cancel the reservation.", mSend:"Reserve", mCancel:"Cancel", okTitle:"Done!", okText:"The gift is reserved. Check your inbox for the confirmation and cancel link.", okClose:"OK", eName:"Please enter your name", eEmail:"Please check your e-mail address", eTaken:"Oops, someone has just reserved this gift.", eServer:"Something went wrong — please try again later.", devPreview:"Open the e-mail (test)",
+    footer:"See you there!", footerSub:"Sonia and her family", icsTitle:"Sonia's 3rd birthday"
   }
 };
 // RU heading reads "Нашей Сонечке уже 3"; ET "Meie Sonia saab 3"; EN "Our Sonia is turning 3"
@@ -344,27 +405,29 @@ function tick(){
 setInterval(tick, 1000);
 
 /* gifts + reservations */
+const GIFT_SVG = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8C10.5 4 7 4 7 6s3 2 5 2zM12 8c1.5-4 5-4 5-2s-3 2-5 2z"/></svg>`;
 let GIFTS = [], RESERVED = new Set(), apiOk = false, current = null;
 function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 const gName = g => typeof g.name === "string" ? g.name : (g.name[lang] || g.name.ru || g.name.en);
 
-async function loadGifts(){
-  try { GIFTS = await (await fetch("gifts.json", {cache:"no-store"})).json(); } catch(e){ GIFTS = []; }
-  await loadReserved();
-}
+async function loadGifts(){ await loadReserved(); }
 async function loadReserved(){
   try {
     const r = await fetch("/api/gifts", {cache:"no-store"});
     if (!r.ok) throw 0;
-    RESERVED = new Set((await r.json()).reserved); apiOk = true;
-  } catch(e){ apiOk = false; }
+    const d = await r.json();
+    GIFTS = d.gifts; RESERVED = new Set(d.reserved); apiOk = true;
+  } catch(e){
+    apiOk = false;
+    if (!GIFTS.length) { try { GIFTS = await (await fetch("gifts.json")).json(); } catch(e2){} }
+  }
   renderGifts();
 }
 
 function renderGifts(){
   const box = document.getElementById("giftList");
   if (!GIFTS.length){
-    box.innerHTML = `<div class="soon"><span class="emoji">🎁</span><h3>${T[lang].soonH}</h3><p>${T[lang].soonP}</p></div>`;
+    box.innerHTML = `<div class="soon"><span class="emoji"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8C10.5 4 7 4 7 6s3 2 5 2zM12 8c1.5-4 5-4 5-2s-3 2-5 2z"/></svg></span><h3>${T[lang].soonH}</h3><p>${T[lang].soonP}</p></div>`;
     return;
   }
   box.innerHTML = `<div class="gifts">` + GIFTS.map(g => {
@@ -374,7 +437,7 @@ function renderGifts(){
       ? `<div class="tag">${T[lang].reservedTag}</div>`
       : `<div class="acts">${g.url ? `<a class="view" href="${esc(g.url)}" target="_blank" rel="noopener">${T[lang].open}</a>` : ""}${apiOk ? `<button class="res" data-id="${esc(g.id)}">${T[lang].reserve}</button>` : ""}</div>`;
     return `<div class="gift${taken ? " taken" : ""}">
-      <div class="pic" ${pic}>${g.image ? "" : esc(g.emoji || "🎁")}</div>
+      <div class="pic${g.image ? " photo" : ""}" ${pic}>${g.image ? "" : GIFT_SVG}</div>
       <div class="body"><span class="name">${esc(gName(g))}</span>${g.price ? `<span class="price">${esc(g.price)}</span>` : ""}</div>
       ${actions}</div>`;
   }).join("") + `</div>`;
@@ -385,7 +448,6 @@ const modal = document.getElementById("modal"), form = document.getElementById("
 function openModal(id){
   current = GIFTS.find(g => g.id === id); if (!current) return;
   document.getElementById("mGift").textContent = gName(current);
-  document.getElementById("mEmoji").textContent = current.emoji || "🎁";
   err.textContent = ""; form.hidden = false; okBox.hidden = true;
   try { fName.value = localStorage.getItem("guestName") || ""; fEmail.value = localStorage.getItem("guestEmail") || ""; } catch(e){}
   modal.hidden = false; setTimeout(() => (fName.value ? fEmail : fName).focus(), 50);
@@ -414,6 +476,89 @@ form.onsubmit = async e => {
   finally { send.disabled = false; }
 };
 document.addEventListener("visibilitychange", () => { if (!document.hidden && apiOk) loadReserved(); });
+
+/* tap on the "3" → a random surprise */
+(() => {
+  const btn = document.querySelector(".three"), inn = btn.querySelector(".three-in"), num = inn.querySelector("b");
+  const fx = document.getElementById("fx"), photo = document.querySelector(".hero-photo img");
+  const COLORS = ["#ff8fb1","#8ec5ff","#ffd66b","#9fe3c9","#c9b6ff","#ffb38a"];
+  const BADGES = [["#ffd66b","#f1b93a"],["#ff8fb1","#e06a90"],["#8ec5ff","#5a9be0"],["#9fe3c9","#5cc49f"],["#c9b6ff","#9d86e8"],["#ffb38a","#ec8a5a"]];
+  const WORDS = { ru:["Ура!","Мне 3!","Привет!","Ещё!","Праздник!"], et:["Hurraa!","Olen 3!","Tere!","Veel!","Pidu!"], en:["Yay!","I'm 3!","Hi!","Again!","Party!"] };
+  const NUMWORD = { ru:"три", et:"kolm", en:"three" };
+  const rnd = (a,b) => a + Math.random()*(b-a), pick = a => a[Math.floor(Math.random()*a.length)];
+  const center = () => { const r = inn.getBoundingClientRect(); return { x:r.left+r.width/2, y:r.top+r.height/2, w:r.width }; };
+  const svgEl = (w,h,body) => { const d=document.createElement("div"); d.className="fx-p"; d.innerHTML=`<svg width="${w}" height="${h}" viewBox="0 0 24 24">${body}</svg>`; d.style.margin=`${-h/2}px 0 0 ${-w/2}px`; return d; };
+  const shapes = {
+    confetti: c => { const d=document.createElement("div"); d.className="fx-p"; const w=rnd(7,11); Object.assign(d.style,{width:w+"px",height:w*1.5+"px",background:c,borderRadius:"3px",margin:`${-w*.75}px 0 0 ${-w/2}px`}); return d; },
+    heart: c => svgEl(26,26,`<path fill="${c}" d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/>`),
+    star: c => svgEl(24,24,`<path fill="${c}" d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"/>`),
+    balloon: c => svgEl(30,44,`<ellipse cx="12" cy="8.5" rx="7" ry="8.5" fill="${c}"/><path d="M12 17l-1.2 1.6h2.4z" fill="${c}"/><path d="M12 18.6c-1.5 1.6 1.5 2.6 0 5.4" stroke="#b9a9c9" stroke-width=".8" fill="none"/>`),
+    dot: c => { const d=document.createElement("div"); d.className="fx-p"; const w=rnd(6,14); Object.assign(d.style,{width:w+"px",height:w+"px",background:c,borderRadius:"50%",margin:`${-w/2}px 0 0 ${-w/2}px`}); return d; }
+  };
+  function fly(el, from, to, { dur=1200, rot=0, s0=.4, s1=1, easing="cubic-bezier(.15,.75,.35,1)", delay=0 } = {}){
+    fx.appendChild(el);
+    el.animate([
+      { transform:`translate(${from.x}px,${from.y}px) scale(${s0}) rotate(0deg)`, opacity:1 },
+      { transform:`translate(${(from.x+to.x)/2}px,${(from.y+to.y)/2}px) scale(${s1}) rotate(${rot/2}deg)`, opacity:1, offset:.6 },
+      { transform:`translate(${to.x}px,${to.y}px) scale(${s1*.9}) rotate(${rot}deg)`, opacity:0 }
+    ], { duration:dur, easing, delay, fill:"backwards" }).onfinish = () => el.remove();
+  }
+  function burst(kind, n, spread=1){
+    const c = center();
+    for (let i=0;i<n;i++){
+      const a = rnd(0, Math.PI*2), d = rnd(.7,1.6)*c.w*spread;
+      fly(shapes[kind](pick(COLORS)), c, { x:c.x+Math.cos(a)*d, y:c.y+Math.sin(a)*d + rnd(20,80) }, { rot:rnd(-360,360), dur:rnd(900,1500) });
+    }
+  }
+  const bounce = (keys, opts) => inn.animate(keys, { duration:900, easing:"ease-out", ...opts });
+
+  const EFFECTS = [
+    () => burst("confetti", 40),
+    () => burst("heart", 16, .9),
+    () => burst("star", 18, 1.1),
+    () => burst("dot", 30, 1.3),
+    () => { const c=center(); for (let i=0;i<9;i++) fly(shapes.balloon(pick(COLORS)), {x:c.x+rnd(-c.w*.6,c.w*.6), y:c.y+rnd(0,30)}, {x:c.x+rnd(-c.w*1.2,c.w*1.2), y:-80}, { dur:rnd(2200,3400), rot:rnd(-25,25), s0:.6, s1:1.2, easing:"ease-in", delay:i*90 }); },
+    () => { const W=innerWidth; for (let i=0;i<70;i++){ const x=rnd(0,W); fly(shapes[pick(["confetti","confetti","star","heart"])](pick(COLORS)), {x, y:-30}, {x:x+rnd(-80,80), y:innerHeight+40}, { dur:rnd(1800,3200), rot:rnd(-540,540), s0:1, s1:1, easing:"linear", delay:rnd(0,700) }); } },
+    () => bounce([{transform:"rotate(0)"},{transform:"rotate(720deg)"}], { duration:1000, easing:"cubic-bezier(.3,1.4,.5,1)" }),
+    () => bounce([{transform:"perspective(400px) rotateY(0)"},{transform:"perspective(400px) rotateY(360deg)"}], { duration:900 }),
+    () => bounce([{transform:"scale(1,1)"},{transform:"scale(1.25,.75)"},{transform:"scale(.8,1.2)"},{transform:"scale(1.12,.9)"},{transform:"scale(.95,1.05)"},{transform:"scale(1,1)"}], { duration:900 }),
+    () => bounce([{transform:"scale(1)"},{transform:"scale(1.35)",offset:.35},{transform:"scale(.92)",offset:.7},{transform:"scale(1)"}], { duration:700 }),
+    () => bounce([{transform:"translateX(0) rotate(0)"},{transform:"translateX(-10%) rotate(-12deg)"},{transform:"translateX(10%) rotate(12deg)"},{transform:"translateX(-6%) rotate(-6deg)"},{transform:"translateX(4%) rotate(4deg)"},{transform:"translateX(0) rotate(0)"}], { duration:700 }),
+    () => { let [bg,sh]=pick(BADGES); while (bg===inn.dataset.bg) [bg,sh]=pick(BADGES); inn.dataset.bg=bg; inn.style.backgroundColor=bg; inn.style.boxShadow=`0 6px 0 ${sh},0 14px 24px rgba(120,80,140,.25)`; burst("dot",14,.8); bounce([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}],{duration:500}); },
+    () => { num.textContent = NUMWORD[lang]; num.style.fontSize = "30cqw"; bounce([{transform:"scale(.6)"},{transform:"scale(1.1)"},{transform:"scale(1)"}],{duration:500}); setTimeout(()=>{ num.textContent="3"; num.style.fontSize=""; }, 1600); },
+    () => { const c=center(), b=document.createElement("div"); b.className="fx-bubble"; b.textContent=pick(WORDS[lang]); fx.appendChild(b); const bw=b.offsetWidth, bh=b.offsetHeight;
+            const side=Math.random()<.5?-1:1, tx=Math.min(Math.max(c.x+side*c.w*.75-bw/2,8),innerWidth-bw-8), ty=c.y-c.w*.45;
+            b.animate([{transform:`translate(${c.x-bw/2}px,${c.y-bh/2}px) scale(.3)`,opacity:0},{transform:`translate(${tx}px,${ty}px) scale(1.1)`,opacity:1,offset:.3},{transform:`translate(${tx}px,${ty-8}px) scale(1)`,opacity:1,offset:.8},{transform:`translate(${tx}px,${ty-20}px) scale(.9)`,opacity:0}],{duration:1600,easing:"ease-out"}).onfinish=()=>b.remove(); },
+    () => { const c=center(); for (let i=0;i<3;i++){ const r=document.createElement("div"); r.className="fx-ring"; r.style.borderColor=pick(COLORS); fx.appendChild(r);
+            r.animate([{transform:`translate(${c.x-c.w/2}px,${c.y-c.w/2}px) scale(1)`,width:c.w+"px",height:c.w+"px",opacity:.9},{transform:`translate(${c.x-c.w/2}px,${c.y-c.w/2}px) scale(2.6)`,width:c.w+"px",height:c.w+"px",opacity:0}],{duration:1100,delay:i*180,easing:"ease-out",fill:"backwards"}).onfinish=()=>r.remove(); } },
+    () => { photo.animate([{transform:"translateY(0) scale(1,1)"},{transform:"translateY(2%) scale(1.03,.96)",offset:.15},{transform:"translateY(-7%) scale(.98,1.03)",offset:.45},{transform:"translateY(0) scale(1.03,.97)",offset:.75},{transform:"translateY(0) scale(1,1)"}],{duration:900,easing:"ease-out"}); bounce([{transform:"translateY(0)"},{transform:"translateY(-12%)",offset:.45},{transform:"translateY(0)"}],{duration:900}); burst("star",8,.8); }
+  ];
+  let last = -1;
+  btn.addEventListener("click", () => {
+    let i; do { i = Math.floor(Math.random()*EFFECTS.length); } while (i === last && EFFECTS.length > 1);
+    last = i; EFFECTS[i]();
+  });
+})();
+
+/* protection: no zoom, no copying, no saving images */
+(() => {
+  const isField = t => t && t.closest && t.closest("input,textarea,[contenteditable]");
+  const stop = e => { if (!isField(e.target)) e.preventDefault(); };
+  ["copy","cut","contextmenu","dragstart","selectstart"].forEach(ev => document.addEventListener(ev, stop));
+  // pinch / gesture zoom (iOS Safari ignores user-scalable=no)
+  ["gesturestart","gesturechange","gestureend"].forEach(ev => document.addEventListener(ev, e => e.preventDefault(), { passive:false }));
+  document.addEventListener("touchmove", e => { if (e.touches.length > 1) e.preventDefault(); }, { passive:false });
+  let lastTap = 0;
+  document.addEventListener("touchend", e => { const now = Date.now(); if (now - lastTap < 300 && !isField(e.target) && !e.target.closest("button,a")) e.preventDefault(); lastTap = now; }, { passive:false });
+  // desktop: ctrl/cmd + wheel, ctrl/cmd + +/-/0, copy/save/print/source shortcuts
+  document.addEventListener("wheel", e => { if (e.ctrlKey || e.metaKey) e.preventDefault(); }, { passive:false });
+  document.addEventListener("keydown", e => {
+    const k = e.key.toLowerCase(), mod = e.ctrlKey || e.metaKey;
+    if (mod && ["+","=","-","_","0"].includes(k)) return e.preventDefault();
+    if (mod && ["s","p","u"].includes(k)) return e.preventDefault();
+    if (mod && ["c","x","a"].includes(k) && !isField(e.target)) return e.preventDefault();
+  });
+})();
 
 /* confetti */
 (() => {

@@ -1,5 +1,7 @@
 // POST /api/reserve {giftId, name, email, lang} → reserves the gift and e-mails a cancel link.
 const store = require("./_lib/store");
+const gifts = require("./_lib/gifts");
+const { notifyOwnerSafe } = require("./_lib/notify");
 const { sendMail } = require("./_lib/mail");
 const I = require("./_lib/i18n");
 const u = require("./_lib/util");
@@ -11,7 +13,6 @@ function emailHtml(t, { name, gift, giftUrl, cancelUrl, site }) {
   return `<!doctype html><html><body style="margin:0;background:#fff8f3;font-family:Arial,Helvetica,sans-serif;color:#3b2f4a">
   <div style="max-width:520px;margin:0 auto;padding:28px 20px">
     <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:0 8px 24px rgba(120,80,140,.12)">
-      <div style="font-size:42px;text-align:center">🎁</div>
       <h2 style="margin:8px 0 16px;text-align:center">${e(t.hello(name))}</h2>
       <p style="font-size:16px;line-height:1.5">${t.booked(e(gift))}</p>
       <p style="font-size:16px;line-height:1.5">${e(t.when)}</p>
@@ -32,7 +33,8 @@ module.exports = async (req, res) => {
   const lang = u.pickLang(b.lang);
   const name = String(b.name || "").trim().slice(0, 60);
   const email = String(b.email || "").trim().slice(0, 120);
-  const gift = u.findGift(b.giftId);
+  let gift;
+  try { gift = await gifts.get(b.giftId); } catch (e) { console.error(e); return u.json(res, 500, { error: "storage" }); }
 
   if (!gift) return u.json(res, 400, { error: "gift" });
   if (!name) return u.json(res, 400, { error: "name" });
@@ -40,7 +42,7 @@ module.exports = async (req, res) => {
 
   const token = u.newToken();
   try {
-    const ok = await store.reserve(gift.id, { name, email, token, lang, at: new Date().toISOString() });
+    const ok = await store.reservations.reserve(gift.id, { name, email, token, lang, at: new Date().toISOString() });
     if (!ok) return u.json(res, 409, { error: "taken" });
   } catch (e) {
     console.error(e);
@@ -58,10 +60,11 @@ module.exports = async (req, res) => {
       html: emailHtml(t, { name, gift: gName, giftUrl: gift.url, cancelUrl, site }),
       text: `${t.hello(name)}\n\n${t.booked(gName).replace(/<[^>]+>/g, "")}\n${t.when}\n\n${t.changed}\n${cancelUrl}\n`,
     });
+    await notifyOwnerSafe(req, { type: "reserve", gift, who: { name, email } });
     u.json(res, 200, { ok: true, ...r });
   } catch (e) {
     console.error(e);
-    await store.remove(gift.id).catch(() => {}); // roll back so the gift isn't stuck
+    await store.reservations.remove(gift.id).catch(() => {}); // roll back so the gift isn't stuck
     u.json(res, 500, { error: "mail" });
   }
 };

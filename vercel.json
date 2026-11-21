@@ -1,8 +1,27 @@
 {
   "headers": [
-    { "source": "/cal/(.*)\\.ics", "headers": [
-      { "key": "Content-Type", "value": "text/calendar; charset=utf-8" },
-      { "key": "Content-Disposition", "value": "inline; filename=\"sonia-birthday.ics\"" }
-    ]}
-  ]
+    {
+      "source": "/cal/(.*)\\.ics",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/calendar; charset=utf-8"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"sonia-birthday.ics\""
+        }
+      ]
+    },
+    {
+      "source": "/admin",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ],
+  "cleanUrls": true
 }

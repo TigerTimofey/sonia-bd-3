@@ -13,7 +13,7 @@ try {
 
 const ROOT = __dirname;
 const PORT = Number(process.env.PORT || 3000);
-const API = { gifts: require("./api/gifts"), reserve: require("./api/reserve"), cancel: require("./api/cancel") };
+const API = Object.fromEntries(["gifts", "reserve", "cancel", "admin", "img"].map(n => [n, require("./api/" + n)]));
 const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".json": "application/json", ".css": "text/css",
   ".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".svg": "image/svg+xml", ".ics": "text/calendar; charset=utf-8" };
 const BLOCKED = /^\/(api|data|node_modules|\.env|\.git|\.vercel|server\.js|package)/;
@@ -26,7 +26,7 @@ http.createServer(async (req, res) => {
   let file;
   if (pathname.startsWith("/_outbox/")) file = path.join(ROOT, ".outbox", path.basename(pathname));
   else if (BLOCKED.test(pathname)) { res.statusCode = 404; return res.end("Not found"); }
-  else file = path.join(ROOT, decodeURIComponent(pathname === "/" ? "/index.html" : pathname));
+  else file = path.join(ROOT, decodeURIComponent(pathname === "/" ? "/index.html" : /^\/[a-z]+$/.test(pathname) ? pathname + ".html" : pathname));
   if (!file.startsWith(ROOT)) { res.statusCode = 403; return res.end(); }
 
   fs.readFile(file, (err, data) => {
