@@ -41,9 +41,16 @@ module.exports = async (req, res) => {
   if (!EMAIL_RE.test(email)) return u.json(res, 400, { error: "email" });
 
   const token = u.newToken();
+  const isCard = gift.type === "giftcard";
+  const amount = parseInt(b.amount, 10);
+  if (isCard && !(amount >= 5 && amount <= 1000)) return u.json(res, 400, { error: "amount" });
+  const cardKey = `${gift.id}:${token}`;
   try {
+    if (isCard) await store.giftcards.add(cardKey, { name, email, amount, token, lang, at: new Date().toISOString() });
+    else {
     const ok = await store.reservations.reserve(gift.id, { name, email, token, lang, at: new Date().toISOString() });
     if (!ok) return u.json(res, 409, { error: "taken" });
+    }
   } catch (e) {
     console.error(e);
     return u.json(res, 500, { error: "storage" });
@@ -51,7 +58,8 @@ module.exports = async (req, res) => {
 
   const site = u.siteUrl(req);
   const cancelUrl = `${site}/api/cancel?gift=${encodeURIComponent(gift.id)}&token=${token}&lang=${lang}`;
-  const t = I[lang];
+  const base = I[lang];
+  const t = isCard ? { ...base, subject: g => base.cardSubject(g, amount), booked: g => base.cardBooked(g, amount), changed: base.cardChanged, cancelBtn: base.cardCancelBtn } : base;
   const gName = u.giftName(gift, lang);
   try {
     const r = await sendMail({
@@ -60,11 +68,11 @@ module.exports = async (req, res) => {
       html: emailHtml(t, { name, gift: gName, giftUrl: gift.url, cancelUrl, site }),
       text: `${t.hello(name)}\n\n${t.booked(gName).replace(/<[^>]+>/g, "")}\n${t.when}\n\n${t.changed}\n${cancelUrl}\n`,
     });
-    await notifyOwnerSafe(req, { type: "reserve", gift, who: { name, email } });
+    await notifyOwnerSafe(req, { type: isCard ? "card" : "reserve", gift, amount, who: { name, email } });
     u.json(res, 200, { ok: true, ...r });
   } catch (e) {
     console.error(e);
-    await store.reservations.remove(gift.id).catch(() => {}); // roll back so the gift isn't stuck
+    await (isCard ? store.giftcards.remove(cardKey) : store.reservations.remove(gift.id)).catch(() => {}); // roll back so the gift isn't stuck
     u.json(res, 500, { error: "mail" });
   }
 };

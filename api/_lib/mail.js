@@ -18,7 +18,7 @@ async function sendMail({ to, subject, html, text }) {
   if (process.env.VERCEL) throw new Error("SMTP is not configured");
   const dir = path.join(process.cwd(), ".outbox");
   fs.mkdirSync(dir, { recursive: true });
-  const name = `${Date.now()}.html`;
+  const name = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}.html`;
   fs.writeFileSync(path.join(dir, name), `<!-- To: ${to} | Subject: ${subject} -->\n${html}`);
   console.log(`[mail:dev] to=${to} subject="${subject}" → /_outbox/${name}`);
   return { preview: `/_outbox/${name}` };

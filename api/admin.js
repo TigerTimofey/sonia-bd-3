@@ -25,11 +25,12 @@ module.exports = async (req, res) => {
   try {
     switch (b.action) {
       case "list": {
-        const [list, resv] = await Promise.all([gifts.list(), store.reservations.all()]);
+        const [list, resv, cards] = await Promise.all([gifts.list(), store.reservations.all(), store.giftcards.byGift()]);
         return u.json(res, 200, {
           gifts: list.map(g => {
             const r = resv[g.id];
-            return { ...gifts.toPublic(g), reservation: r ? { name: r.name, email: r.email, at: r.at, lang: r.lang } : null };
+            return { ...gifts.toPublic(g), reservation: r ? { name: r.name, email: r.email, at: r.at, lang: r.lang } : null,
+              purchases: g.type === "giftcard" ? (cards[g.id] || []).map(x => ({ key: x.key, name: x.name, email: x.email, amount: x.amount, at: x.at })) : undefined };
           }),
         });
       }
@@ -46,6 +47,11 @@ module.exports = async (req, res) => {
       case "unreserve": {
         const gift = await gifts.get(b.id), rec = gift && (await store.reservations.get(gift.id));
         if (rec) { await store.reservations.remove(gift.id); await notifyOwnerSafe(req, { type: "admin-cancel", gift, who: rec }); }
+        return u.json(res, 200, { ok: true });
+      }
+      case "card-remove": {
+        const key = String(b.key || ""), rec = await store.giftcards.get(key), gift = rec && (await gifts.get(key.split(":")[0]));
+        if (rec) { await store.giftcards.remove(key); await notifyOwnerSafe(req, { type: "admin-card-cancel", gift, amount: rec.amount, who: rec }); }
         return u.json(res, 200, { ok: true });
       }
       case "mail": {

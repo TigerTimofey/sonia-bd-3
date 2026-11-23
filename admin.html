@@ -81,6 +81,12 @@
   .money .cur{position:absolute;right:14px;top:50%;transform:translateY(-50%);margin-top:2px;font-size:16px;font-weight:800;color:var(--muted);pointer-events:none}
   .grid2{display:grid;grid-template-columns:1fr 130px;gap:10px}
   .flag{display:inline-block;min-width:26px;padding:0 6px;margin-right:6px;border-radius:6px;background:var(--blue-soft);color:#2f78c4;font-size:11px;text-align:center}
+  .check{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink);background:#fbf8ff;border:2px solid var(--line);border-radius:14px;padding:11px 13px;cursor:pointer}
+  .check input{width:20px;height:20px;accent-color:var(--pink);flex:none}
+  .buyers{margin-top:8px;display:grid;gap:6px}
+  .buyer{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff7e3;border-radius:12px;padding:7px 10px;font-size:14px}
+  .buyer .amt{font-weight:900;color:#a5780a;margin-right:6px}
+  .buyer .when{color:var(--muted);font-size:12px}
   .foot{display:flex;justify-content:flex-end;gap:10px;margin-top:4px}
 
   .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;font-weight:800;padding:12px 18px;border-radius:999px;z-index:60;box-shadow:var(--shadow);max-width:calc(100% - 32px);text-align:center}
@@ -142,6 +148,8 @@
         <label><span class="flag">ET</span>Название по-эстонски<input type="text" name="et" maxlength="100" placeholder="Nukumaja"></label>
         <label><span class="flag">EN</span>Название по-английски<input type="text" name="en" maxlength="100" placeholder="Doll house"></label>
       </div>
+      <label class="check"><input type="checkbox" name="isCard"> Подарочная карта — можно купить много раз (Partnerkaart и т.п.)</label>
+      <label id="amountsRow" hidden>Суммы на выбор, € (через запятую)<input type="text" name="amounts" placeholder="5, 20, 30, 50" inputmode="numeric"></label>
       <div class="grid2">
         <label>Ссылка, где купить<input type="url" name="url" maxlength="600" placeholder="https://…" inputmode="url"></label>
         <label>Сумма<span class="money"><input type="text" name="price" maxlength="20" placeholder="30" inputmode="decimal" autocomplete="off"><span class="cur">€</span></span></label>
@@ -207,7 +215,9 @@ function render(){
         <div class="name">${esc(main)}</div>
         ${others ? `<div class="langs">${esc(others)}</div>` : ""}
         <div class="meta">${g.price ? `<span class="price">${esc(g.price)}</span>` : ""}${g.url ? `<a href="${esc(g.url)}" target="_blank" rel="noopener">Ссылка ↗</a>` : `<span class="muted">без ссылки</span>`}</div>
-        ${r ? `<div class="status taken">Забронировал(а): <b>${esc(r.name)}</b><br><a href="mailto:${esc(r.email)}">${esc(r.email)}</a> <span class="when">· ${fmt(r.at)}</span></div>`
+        ${g.type === "giftcard" ? `<div class="status taken">Подарочная карта · куплено <b>${g.purchases.length} шт.</b> на <b>${g.purchases.reduce((s,x)=>s+x.amount,0)} €</b></div>
+            <div class="buyers">${g.purchases.map(x => `<div class="buyer"><div><span class="amt">${x.amount} €</span>${esc(x.name)} · <a href="mailto:${esc(x.email)}">${esc(x.email)}</a> <span class="when">· ${fmt(x.at)}</span></div><button class="btn danger sm" data-act="cardrm" data-key="${esc(x.key)}">Удалить</button></div>`).join("")}</div>`
+          : r ? `<div class="status taken">Забронировал(а): <b>${esc(r.name)}</b><br><a href="mailto:${esc(r.email)}">${esc(r.email)}</a> <span class="when">· ${fmt(r.at)}</span></div>`
             : `<div class="status free">Свободен</div>`}
         <div class="acts">
           <button class="btn alt sm" data-act="edit">Изменить</button>
@@ -229,6 +239,7 @@ $("list").onclick = async e => {
     if (act === "edit") return openEditor(g);
     if (act === "delete") { if (!confirm(`Удалить «${name}»?${g.reservation ? "\nЕго уже забронировали — бронь тоже удалится." : ""}`)) return; b.disabled = true; await api("delete", { id }); toast("Подарок удалён"); }
     if (act === "unreserve") { if (!confirm(`Снять бронь «${name}» (${g.reservation.name})?`)) return; b.disabled = true; await api("unreserve", { id }); toast("Бронь снята"); }
+    if (act === "cardrm") { const x = g.purchases.find(p => p.key === b.dataset.key); if (!confirm(`Удалить отметку ${x.name} на ${x.amount} €?`)) return; b.disabled = true; await api("card-remove", { key: b.dataset.key }); toast("Отметка удалена"); }
     if (act === "up" || act === "down") { b.disabled = true; await api("move", { id, dir: act === "up" ? -1 : 1 }); }
     await load();
   } catch(err){ if (err.message !== "auth") toast(ERR[err.message] || "Ошибка"); b.disabled = false; }
@@ -251,6 +262,9 @@ function openEditor(g){
   form.elements.namedItem("et").value = g?.name?.et || "";
   form.elements.namedItem("en").value = g?.name?.en || "";
   form.elements.namedItem("url").value = g?.url || "";
+  form.elements.namedItem("isCard").checked = g?.type === "giftcard";
+  form.elements.namedItem("amounts").value = (g?.amounts || []).join(", ");
+  $("amountsRow").hidden = g?.type !== "giftcard";
   form.elements.namedItem("price").value = (g?.price || "").replace(/\s*(€|eur|euro)\s*$/i, "").trim();
   $("photoInput").value = ""; $("photoInfo").textContent = ""; $("edErr").textContent = "";
   setPreview(g?.image || "");
@@ -258,6 +272,7 @@ function openEditor(g){
 }
 function closeEditor(){ $("editorModal").hidden = true; }
 $("addBtn").onclick = () => openEditor(null);
+form.elements.namedItem("isCard").onchange = e => { $("amountsRow").hidden = !e.target.checked; if (e.target.checked && !form.elements.namedItem("amounts").value) form.elements.namedItem("amounts").value = "5, 20, 30, 50"; };
 $("edCancel").onclick = closeEditor;
 $("editorModal").addEventListener("click", e => { if (e.target === $("editorModal")) closeEditor(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("editorModal").hidden) closeEditor(); });
@@ -291,7 +306,7 @@ form.onsubmit = async e => {
   e.preventDefault();
   const v = n => form.elements.namedItem(n).value.trim();
   const num = v("price").replace(/\s*(€|eur|euro)\s*$/i, "").trim();
-  const gift = { id: editing?.id, name: { ru: v("ru"), et: v("et"), en: v("en") }, url: v("url"), price: num ? num + " €" : "" };
+  const gift = { id: editing?.id, name: { ru: v("ru"), et: v("et"), en: v("en") }, url: v("url"), price: num ? num + " €" : "", type: form.elements.namedItem("isCard").checked ? "giftcard" : "item", amounts: v("amounts") };
   if (!gift.name.ru && !gift.name.et && !gift.name.en) { $("edErr").textContent = ERR.name; return; }
   if (gift.url && !/^https?:\/\//i.test(gift.url)) gift.url = "https://" + gift.url;
   if (newImage) gift.image = newImage; else if (removeImage) gift.removeImage = true;

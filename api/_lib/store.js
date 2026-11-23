@@ -12,6 +12,7 @@ const KEYS = {
   gifts: "sonia-bd-3:gifts",               // giftId -> gift JSON
   images: "sonia-bd-3:images",             // giftId -> data:image/...;base64,...
   meta: "sonia-bd-3:meta",
+  giftcards: "sonia-bd-3:giftcards",       // "<giftId>:<token>" -> {name,email,amount,token,lang,at}
 };
 
 async function redis(cmd) {
@@ -87,5 +88,18 @@ module.exports = {
     get: async id => { const v = await h.get(KEYS.reservations, id); return v ? JSON.parse(v) : null; },
     reserve: (id, rec) => h.setnx(KEYS.reservations, id, JSON.stringify(rec)),
     remove: id => h.del(KEYS.reservations, id),
+  },
+  giftcards: {
+    all: async () => parseAll(await h.getall(KEYS.giftcards)),          // key -> entry
+    get: async key => { const v = await h.get(KEYS.giftcards, key); return v ? JSON.parse(v) : null; },
+    add: (key, rec) => h.set(KEYS.giftcards, key, JSON.stringify(rec)),
+    remove: key => h.del(KEYS.giftcards, key),
+    // { giftId: [entries...] }
+    byGift: async () => {
+      const all = parseAll(await h.getall(KEYS.giftcards)), out = {};
+      for (const [k, v] of Object.entries(all)) { const id = k.split(":")[0]; (out[id] = out[id] || []).push({ key: k, ...v }); }
+      for (const id in out) out[id].sort((a, b) => a.at.localeCompare(b.at));
+      return out;
+    },
   },
 };

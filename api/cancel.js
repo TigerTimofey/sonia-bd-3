@@ -22,23 +22,26 @@ module.exports = async (req, res) => {
   const t = I[lang];
   try {
     const gift = await gifts.get(q.gift);
-    const rec = gift && (await store.reservations.get(gift.id));
+    const isCard = gift && gift.type === "giftcard";
+    const cardKey = isCard && /^[a-f0-9]{36}$/.test(q.token || "") ? `${gift.id}:${q.token}` : null;
+    const rec = gift && (isCard ? (cardKey && (await store.giftcards.get(cardKey))) : (await store.reservations.get(gift.id)));
     if (!gift || !rec || !u.sameToken(rec.token, q.token)) {
       return u.html(res, 404, page(t, lang, `<div class="e"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg></div><h1>${u.esc(t.notFound)}</h1>`));
     }
     const gName = u.esc(u.giftName(gift, lang));
 
     if (req.method === "POST") {
-      await store.reservations.remove(gift.id);
-      await notifyOwnerSafe(req, { type: "cancel", gift, who: { name: rec.name, email: rec.email } });
+      if (isCard) await store.giftcards.remove(cardKey); else await store.reservations.remove(gift.id);
+      await notifyOwnerSafe(req, { type: isCard ? "card-cancel" : "cancel", gift, amount: rec.amount, who: { name: rec.name, email: rec.email } });
+      if (isCard) return u.html(res, 200, page(t, lang, `<div class="e ok"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>${t.cardDone(gName, rec.amount)}</h1>`));
       return u.html(res, 200, page(t, lang, `<div class="e ok"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>${t.done(gName)}</h1>`));
     }
-    return u.html(res, 200, page(t, lang, `<div class="e"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8C10.5 4 7 4 7 6s3 2 5 2zM12 8c1.5-4 5-4 5-2s-3 2-5 2z"/></svg></div><h1>${t.confirmQ(gName)}</h1>
+    return u.html(res, 200, page(t, lang, `<div class="e"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8C10.5 4 7 4 7 6s3 2 5 2zM12 8c1.5-4 5-4 5-2s-3 2-5 2z"/></svg></div><h1>${isCard ? t.cardConfirmQ(gName, rec.amount) : t.confirmQ(gName)}</h1>
       <form method="POST" action="/api/cancel">
         <input type="hidden" name="gift" value="${u.esc(gift.id)}">
         <input type="hidden" name="token" value="${u.esc(q.token)}">
         <input type="hidden" name="lang" value="${lang}">
-        <button type="submit">${u.esc(t.confirmBtn)}</button>
+        <button type="submit">${u.esc(isCard ? t.cardCancelBtn : t.confirmBtn)}</button>
       </form>`));
   } catch (e) {
     console.error(e);

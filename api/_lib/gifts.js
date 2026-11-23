@@ -23,7 +23,9 @@ async function get(id) {
 }
 
 const imageUrl = g => (g.imageV ? `/api/img?id=${encodeURIComponent(g.id)}&v=${g.imageV}` : g.image || "");
-const toPublic = g => ({ id: g.id, name: g.name, url: g.url || "", price: g.price || "", image: imageUrl(g) });
+const toPublic = g => ({ id: g.id, name: g.name, url: g.url || "", price: g.price || "", image: imageUrl(g), type: g.type === "giftcard" ? "giftcard" : "item", amounts: g.type === "giftcard" ? (g.amounts || []) : undefined });
+
+const DEFAULT_AMOUNTS = [5, 20, 30, 50];
 
 const clean = (v, max) => String(v ?? "").trim().slice(0, max);
 const IMG_RE = /^data:image\/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+$/;
@@ -43,7 +45,15 @@ async function save(input) {
     const all = await list();
     gift = { id: crypto.randomBytes(5).toString("hex"), order: all.reduce((m, g) => Math.max(m, g.order ?? 0), -1) + 1, createdAt: new Date().toISOString() };
   }
-  Object.assign(gift, { name, url, price });
+  const type = input.type === "giftcard" ? "giftcard" : "item";
+  let amounts;
+  if (type === "giftcard") {
+    amounts = (Array.isArray(input.amounts) ? input.amounts : String(input.amounts || "").split(/[\s,;]+/))
+      .map(n => parseInt(n, 10)).filter(n => n >= 1 && n <= 1000);
+    amounts = [...new Set(amounts)].sort((a, b) => a - b).slice(0, 8);
+    if (!amounts.length) amounts = DEFAULT_AMOUNTS;
+  }
+  Object.assign(gift, { name, url, price, type, amounts });
 
   if (input.image) {
     if (typeof input.image !== "string" || !IMG_RE.test(input.image)) return { error: "image" };
@@ -60,6 +70,7 @@ async function save(input) {
 }
 
 async function remove(id) {
+  for (const k of Object.keys(await h.getall(KEYS.giftcards))) if (k.startsWith(id + ":")) await h.del(KEYS.giftcards, k);
   await h.del(KEYS.gifts, id);
   await h.del(KEYS.images, id);
   await h.del(KEYS.reservations, id);

@@ -5,8 +5,9 @@ const { json } = require("./_lib/util");
 
 module.exports = async (req, res) => {
   try {
-    const [list, reserved] = await Promise.all([gifts.list(), store.reservations.all()]);
-    json(res, 200, { gifts: list.map(gifts.toPublic), reserved: Object.keys(reserved) });
+    const [list, reserved, cards] = await Promise.all([gifts.list(), store.reservations.all(), store.giftcards.byGift()]);
+    const counts = Object.fromEntries(Object.entries(cards).map(([id, arr]) => [id, arr.length]));
+    json(res, 200, { gifts: list.map(gifts.toPublic), reserved: Object.keys(reserved), counts });
   } catch (e) {
     console.error(e);
     json(res, 500, { error: "storage" });
