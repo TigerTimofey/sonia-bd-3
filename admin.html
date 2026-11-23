@@ -126,6 +126,7 @@
   </div>
   <div class="bar">
     <button class="btn" id="addBtn">+ Добавить подарок</button>
+    <button class="btn alt" id="addCardBtn">+ Добавить подарочную карту</button>
     <button class="btn alt" id="mailBtn">Отправить список на почту</button>
   </div>
   <div class="list" id="list"></div>
@@ -148,11 +149,10 @@
         <label><span class="flag">ET</span>Название по-эстонски<input type="text" name="et" maxlength="100" placeholder="Nukumaja"></label>
         <label><span class="flag">EN</span>Название по-английски<input type="text" name="en" maxlength="100" placeholder="Doll house"></label>
       </div>
-      <label class="check"><input type="checkbox" name="isCard"> Подарочная карта — можно купить много раз (Partnerkaart и т.п.)</label>
       <label id="amountsRow" hidden>Суммы на выбор, € (через запятую)<input type="text" name="amounts" placeholder="5, 20, 30, 50" inputmode="numeric"></label>
-      <div class="grid2">
+      <div class="grid2" id="linkRow">
         <label>Ссылка, где купить<input type="url" name="url" maxlength="600" placeholder="https://…" inputmode="url"></label>
-        <label>Сумма<span class="money"><input type="text" name="price" maxlength="20" placeholder="30" inputmode="decimal" autocomplete="off"><span class="cur">€</span></span></label>
+        <label id="priceRow">Сумма<span class="money"><input type="text" name="price" maxlength="20" placeholder="30" inputmode="decimal" autocomplete="off"><span class="cur">€</span></span></label>
       </div>
       <p class="err" id="edErr"></p>
       <div class="foot">
@@ -255,16 +255,22 @@ $("mailBtn").onclick = async () => {
 /* ---------- editor ---------- */
 const form = $("edForm"), pick = $("photoPick");
 function setPreview(src){ pick.style.backgroundImage = src ? `url('${src}')` : ""; pick.classList.toggle("has", !!src); $("photoRemove").hidden = !src; }
-function openEditor(g){
+let editCard = false;
+function openEditor(g, card){
   editing = g || null; newImage = null; removeImage = false;
-  $("edTitle").textContent = g ? "Изменить подарок" : "Новый подарок";
+  editCard = g ? g.type === "giftcard" : !!card;
+  $("edTitle").textContent = editCard ? (g ? "Изменить подарочную карту" : "Новая подарочная карта") : (g ? "Изменить подарок" : "Новый подарок");
   form.elements.namedItem("ru").value = g?.name?.ru || "";
   form.elements.namedItem("et").value = g?.name?.et || "";
   form.elements.namedItem("en").value = g?.name?.en || "";
   form.elements.namedItem("url").value = g?.url || "";
-  form.elements.namedItem("isCard").checked = g?.type === "giftcard";
-  form.elements.namedItem("amounts").value = (g?.amounts || []).join(", ");
-  $("amountsRow").hidden = g?.type !== "giftcard";
+  form.elements.namedItem("amounts").value = (g?.amounts?.length ? g.amounts : [5, 20, 30, 50]).join(", ");
+  $("amountsRow").hidden = !editCard;
+  $("priceRow").hidden = editCard;
+  $("linkRow").style.gridTemplateColumns = editCard ? "1fr" : "";
+  const ph = editCard ? ["Partnerkaart подарочная карта", "Partner e-kinkekaart", "Partner gift card"] : ["Кукольный домик", "Nukumaja", "Doll house"];
+  ["ru", "et", "en"].forEach((k, i) => form.elements.namedItem(k).placeholder = ph[i]);
+  form.elements.namedItem("url").placeholder = editCard ? "https://kinkekaart.partnerkaart.ee/et/osta-e-kinkekaart?card=30" : "https://…";
   form.elements.namedItem("price").value = (g?.price || "").replace(/\s*(€|eur|euro)\s*$/i, "").trim();
   $("photoInput").value = ""; $("photoInfo").textContent = ""; $("edErr").textContent = "";
   setPreview(g?.image || "");
@@ -272,7 +278,7 @@ function openEditor(g){
 }
 function closeEditor(){ $("editorModal").hidden = true; }
 $("addBtn").onclick = () => openEditor(null);
-form.elements.namedItem("isCard").onchange = e => { $("amountsRow").hidden = !e.target.checked; if (e.target.checked && !form.elements.namedItem("amounts").value) form.elements.namedItem("amounts").value = "5, 20, 30, 50"; };
+$("addCardBtn").onclick = () => openEditor(null, true);
 $("edCancel").onclick = closeEditor;
 $("editorModal").addEventListener("click", e => { if (e.target === $("editorModal")) closeEditor(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("editorModal").hidden) closeEditor(); });
@@ -306,7 +312,7 @@ form.onsubmit = async e => {
   e.preventDefault();
   const v = n => form.elements.namedItem(n).value.trim();
   const num = v("price").replace(/\s*(€|eur|euro)\s*$/i, "").trim();
-  const gift = { id: editing?.id, name: { ru: v("ru"), et: v("et"), en: v("en") }, url: v("url"), price: num ? num + " €" : "", type: form.elements.namedItem("isCard").checked ? "giftcard" : "item", amounts: v("amounts") };
+  const gift = { id: editing?.id, name: { ru: v("ru"), et: v("et"), en: v("en") }, url: v("url"), price: !editCard && num ? num + " €" : "", type: editCard ? "giftcard" : "item", amounts: v("amounts") };
   if (!gift.name.ru && !gift.name.et && !gift.name.en) { $("edErr").textContent = ERR.name; return; }
   if (gift.url && !/^https?:\/\//i.test(gift.url)) gift.url = "https://" + gift.url;
   if (newImage) gift.image = newImage; else if (removeImage) gift.removeImage = true;

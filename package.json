@@ -2,7 +2,8 @@
   "name": "sonia-bd-3",
   "private": true,
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "pull": "node scripts/pull.js"
   },
   "dependencies": {
     "nodemailer": "^6.9.16"
