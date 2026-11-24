@@ -630,9 +630,9 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden && ap
   const on = () => { sh.hidden = false; }, off = () => { sh.hidden = true; };
   window.addEventListener("blur", on);
   window.addEventListener("focus", off);
-  document.addEventListener("visibilitychange", () => document.hidden ? on() : (document.hasFocus() && off()));
+  document.addEventListener("visibilitychange", () => document.hidden ? on() : off());
   window.addEventListener("pagehide", on);
-  window.addEventListener("pageshow", () => document.hasFocus() && off());
+  window.addEventListener("pageshow", off);
   // ⌘⇧3/4/5 (Mac) and Win+Shift+S start with Meta+Shift held → go black before the shot
   const combo = e => e.metaKey && e.shiftKey;
   document.addEventListener("keydown", e => {
@@ -643,7 +643,7 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden && ap
     if (e.key === "PrintScreen") { try { navigator.clipboard.writeText(""); } catch(_){} setTimeout(() => document.hasFocus() && off(), 1500); return; }
     if (!combo(e) && document.hasFocus()) setTimeout(off, 300);
   }, true);
-  ["pointerdown","mousemove","touchstart"].forEach(ev => document.addEventListener(ev, () => { if (!sh.hidden && document.hasFocus()) off(); }, { passive:true }));
+  ["pointerdown","mousemove","touchstart"].forEach(ev => document.addEventListener(ev, () => { if (!sh.hidden) off(); }, { passive:true }));
 })();
 
 /* confetti */
