@@ -174,7 +174,6 @@
   .amounts input:focus,.amounts input.on{border-color:var(--pink)}
   .card-go{display:flex;margin-top:12px;width:100%}
   .card-go.off{opacity:.5;pointer-events:none}
-  .gift .count{margin:0 20px 10px;text-align:center;background:#fff3cf;color:#a5780a;font-weight:800;border-radius:999px;padding:8px}
   .soon{background:#fff;border:3px dashed var(--lilac);border-radius:26px;padding:40px 20px;text-align:center}
   .soon .emoji{font-size:64px;display:block;animation:wiggle 2.4s ease-in-out infinite}
   @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
@@ -348,7 +347,7 @@ const T = {
     route:"Маршрут", calendar:"В календарь", toGifts:"К подаркам",
     cdTitle:"До праздника осталось", days:"дней", hours:"часов", mins:"минут", secs:"секунд", now:"Праздник уже идёт!", past:"Спасибо, что были с нами!",
     giftsTitle:"Идеи подарков", giftsSub:"Если хотите порадовать Соню — вот что ей понравится",
-    soonH:"Скоро здесь появится список", soonP:"Мы готовим идеи подарков — загляните чуть позже!", open:"Посмотреть", reserve:"Забронировать", reservedTag:"Забронировано", mTitle:"Забронировать подарок", mName:"Ваше имя", mEmail:"Ваша почта", mHint:"Мы пришлём подтверждение и ссылку для отмены брони.", mSend:"Забронировать", mCancel:"Отмена", okTitle:"Готово!", okText:"Подарок забронирован. Проверьте почту — там подтверждение и ссылка для отмены.", okClose:"Хорошо", eName:"Введите имя", eEmail:"Проверьте адрес почты", eTaken:"Упс, этот подарок только что забронировал кто-то другой.", eServer:"Не получилось — попробуйте ещё раз чуть позже.", devPreview:"Открыть письмо (тест)", cardBtn:"Подарить карту", bought:n=>`Куплено ${n} шт.`, cardTitle:"Подарить карту", cardStep1:"1. Выберите сумму", cardOther:"Другая сумма, €", cardOpen:a=>`Купить карту на ${a} €`, cardPick:"Выберите сумму", cardHint:a=>`Откроется сайт Partnerkaart. Нажмите там сумму ${a} € (или впишите её в поле «Kirjuta summa») и оформите покупку.`, cardStep2:"2. После покупки отметьтесь — родители увидят ваш подарок", cardSend:"Я купил(а)", cardHintMail:"Пришлём подтверждение на почту.", okCardText:"Спасибо! Ваш подарок отмечен, подтверждение отправлено на почту.", eAmount:"Выберите сумму от 5 до 1000 €",
+    soonH:"Скоро здесь появится список", soonP:"Мы готовим идеи подарков — загляните чуть позже!", open:"Посмотреть", reserve:"Забронировать", reservedTag:"Забронировано", mTitle:"Забронировать подарок", mName:"Ваше имя", mEmail:"Ваша почта", mHint:"Мы пришлём подтверждение и ссылку для отмены брони.", mSend:"Забронировать", mCancel:"Отмена", okTitle:"Готово!", okText:"Подарок забронирован. Проверьте почту — там подтверждение и ссылка для отмены.", okClose:"Хорошо", eName:"Введите имя", eEmail:"Проверьте адрес почты", eTaken:"Упс, этот подарок только что забронировал кто-то другой.", eServer:"Не получилось — попробуйте ещё раз чуть позже.", devPreview:"Открыть письмо (тест)", cardBtn:"Подарить карту", cardTitle:"Подарить карту", cardStep1:"1. Выберите сумму", cardOther:"Другая сумма, €", cardOpen:a=>`Купить карту на ${a} €`, cardPick:"Выберите сумму", cardHint:a=>`Откроется сайт Partnerkaart. Нажмите там сумму ${a} € (или впишите её в поле «Kirjuta summa») и оформите покупку.`, cardStep2:"2. После покупки отметьтесь — родители увидят ваш подарок", cardSend:"Я купил(а)", cardHintMail:"Пришлём подтверждение на почту.", okCardText:"Спасибо! Ваш подарок отмечен, подтверждение отправлено на почту.", eAmount:"Выберите сумму от 5 до 1000 €",
     footer:"Ждём вас!", footerSub:"Соня и её семья", icsTitle:"День рождения Сони (3 года)"
   },
   et:{
@@ -362,7 +361,7 @@ const T = {
     route:"Teekond", calendar:"Lisa kalendrisse", toGifts:"Kingituste juurde",
     cdTitle:"Peoni on jäänud", days:"päeva", hours:"tundi", mins:"minutit", secs:"sekundit", now:"Pidu käib!", past:"Aitäh, et olite meiega!",
     giftsTitle:"Kingiideed", giftsSub:"Kui soovite Soniat rõõmustada – siin on, mis talle meeldiks",
-    soonH:"Nimekiri tuleb peagi", soonP:"Kogume kingiideid – vaadake veidi hiljem uuesti!", open:"Vaata", reserve:"Broneeri", reservedTag:"Broneeritud", mTitle:"Broneeri kingitus", mName:"Sinu nimi", mEmail:"Sinu e-post", mHint:"Saadame kinnituse ja lingi broneeringu tühistamiseks.", mSend:"Broneeri", mCancel:"Loobu", okTitle:"Valmis!", okText:"Kingitus on broneeritud. Vaata oma postkasti – seal on kinnitus ja tühistamise link.", okClose:"Selge", eName:"Sisesta nimi", eEmail:"Kontrolli e-posti aadressi", eTaken:"Oih, keegi broneeris selle kingituse just praegu.", eServer:"Ei õnnestunud – proovi veidi hiljem uuesti.", devPreview:"Ava kiri (test)", cardBtn:"Kingi kaart", bought:n=>`Ostetud ${n} tk`, cardTitle:"Kingi kaart", cardStep1:"1. Vali summa", cardOther:"Muu summa, €", cardOpen:a=>`Osta kaart ${a} € eest`, cardPick:"Vali summa", cardHint:a=>`Avaneb Partnerkaardi leht. Vali seal summa ${a} € (või kirjuta see lahtrisse „Kirjuta summa“) ja vormista ost.`, cardStep2:"2. Pärast ostu märgi end – vanemad näevad sinu kingitust", cardSend:"Ostsin ära", cardHintMail:"Saadame kinnituse e-postile.", okCardText:"Aitäh! Sinu kingitus on märgitud, kinnitus on saadetud e-postile.", eAmount:"Vali summa 5 kuni 1000 €",
+    soonH:"Nimekiri tuleb peagi", soonP:"Kogume kingiideid – vaadake veidi hiljem uuesti!", open:"Vaata", reserve:"Broneeri", reservedTag:"Broneeritud", mTitle:"Broneeri kingitus", mName:"Sinu nimi", mEmail:"Sinu e-post", mHint:"Saadame kinnituse ja lingi broneeringu tühistamiseks.", mSend:"Broneeri", mCancel:"Loobu", okTitle:"Valmis!", okText:"Kingitus on broneeritud. Vaata oma postkasti – seal on kinnitus ja tühistamise link.", okClose:"Selge", eName:"Sisesta nimi", eEmail:"Kontrolli e-posti aadressi", eTaken:"Oih, keegi broneeris selle kingituse just praegu.", eServer:"Ei õnnestunud – proovi veidi hiljem uuesti.", devPreview:"Ava kiri (test)", cardBtn:"Kingi kaart", cardTitle:"Kingi kaart", cardStep1:"1. Vali summa", cardOther:"Muu summa, €", cardOpen:a=>`Osta kaart ${a} € eest`, cardPick:"Vali summa", cardHint:a=>`Avaneb Partnerkaardi leht. Vali seal summa ${a} € (või kirjuta see lahtrisse „Kirjuta summa“) ja vormista ost.`, cardStep2:"2. Pärast ostu märgi end – vanemad näevad sinu kingitust", cardSend:"Ostsin ära", cardHintMail:"Saadame kinnituse e-postile.", okCardText:"Aitäh! Sinu kingitus on märgitud, kinnitus on saadetud e-postile.", eAmount:"Vali summa 5 kuni 1000 €",
     footer:"Ootame teid!", footerSub:"Sonia ja tema pere", icsTitle:"Sonia 3. sünnipäev"
   },
   en:{
@@ -376,7 +375,7 @@ const T = {
     route:"Directions", calendar:"Add to calendar", toGifts:"Gift ideas",
     cdTitle:"Party starts in", days:"days", hours:"hours", mins:"minutes", secs:"seconds", now:"The party is on!", past:"Thank you for celebrating with us!",
     giftsTitle:"Gift ideas", giftsSub:"If you'd like to make Sonia happy — here's what she'd love",
-    soonH:"The list is coming soon", soonP:"We're collecting gift ideas — check back a little later!", open:"View", reserve:"Reserve", reservedTag:"Reserved", mTitle:"Reserve a gift", mName:"Your name", mEmail:"Your e-mail", mHint:"We'll send a confirmation and a link to cancel the reservation.", mSend:"Reserve", mCancel:"Cancel", okTitle:"Done!", okText:"The gift is reserved. Check your inbox for the confirmation and cancel link.", okClose:"OK", eName:"Please enter your name", eEmail:"Please check your e-mail address", eTaken:"Oops, someone has just reserved this gift.", eServer:"Something went wrong — please try again later.", devPreview:"Open the e-mail (test)", cardBtn:"Give a gift card", bought:n=>`Bought: ${n}`, cardTitle:"Give a gift card", cardStep1:"1. Choose the amount", cardOther:"Other amount, €", cardOpen:a=>`Buy a ${a} € card`, cardPick:"Choose an amount", cardHint:a=>`The Partnerkaart website will open. Pick ${a} € there (or type it into “Kirjuta summa”) and complete the purchase.`, cardStep2:"2. After buying, mark it here so the parents know", cardSend:"I bought it", cardHintMail:"We will send a confirmation by e-mail.", okCardText:"Thank you! Your gift is marked and a confirmation was sent by e-mail.", eAmount:"Choose an amount from 5 to 1000 €",
+    soonH:"The list is coming soon", soonP:"We're collecting gift ideas — check back a little later!", open:"View", reserve:"Reserve", reservedTag:"Reserved", mTitle:"Reserve a gift", mName:"Your name", mEmail:"Your e-mail", mHint:"We'll send a confirmation and a link to cancel the reservation.", mSend:"Reserve", mCancel:"Cancel", okTitle:"Done!", okText:"The gift is reserved. Check your inbox for the confirmation and cancel link.", okClose:"OK", eName:"Please enter your name", eEmail:"Please check your e-mail address", eTaken:"Oops, someone has just reserved this gift.", eServer:"Something went wrong — please try again later.", devPreview:"Open the e-mail (test)", cardBtn:"Give a gift card", cardTitle:"Give a gift card", cardStep1:"1. Choose the amount", cardOther:"Other amount, €", cardOpen:a=>`Buy a ${a} € card`, cardPick:"Choose an amount", cardHint:a=>`The Partnerkaart website will open. Pick ${a} € there (or type it into “Kirjuta summa”) and complete the purchase.`, cardStep2:"2. After buying, mark it here so the parents know", cardSend:"I bought it", cardHintMail:"We will send a confirmation by e-mail.", okCardText:"Thank you! Your gift is marked and a confirmation was sent by e-mail.", eAmount:"Choose an amount from 5 to 1000 €",
     footer:"See you there!", footerSub:"Sonia and her family", icsTitle:"Sonia's 3rd birthday"
   }
 };
@@ -428,7 +427,7 @@ setInterval(tick, 1000);
 
 /* gifts + reservations */
 const GIFT_SVG = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13"/><path d="M12 8C10.5 4 7 4 7 6s3 2 5 2zM12 8c1.5-4 5-4 5-2s-3 2-5 2z"/></svg>`;
-let GIFTS = [], RESERVED = new Set(), COUNTS = {}, apiOk = false, current = null, cardAmount = 0;
+let GIFTS = [], RESERVED = new Set(), apiOk = false, current = null, cardAmount = 0;
 function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 const gName = g => typeof g.name === "string" ? g.name : (g.name[lang] || g.name.ru || g.name.en);
 
@@ -438,7 +437,7 @@ async function loadReserved(){
     const r = await fetch("/api/gifts", {cache:"no-store"});
     if (!r.ok) throw 0;
     const d = await r.json();
-    GIFTS = d.gifts; RESERVED = new Set(d.reserved); COUNTS = d.counts || {}; apiOk = true;
+    GIFTS = d.gifts; RESERVED = new Set(d.reserved); apiOk = true;
   } catch(e){
     apiOk = false;
     if (!GIFTS.length) { try { GIFTS = await (await fetch("gifts.json")).json(); } catch(e2){} }
@@ -457,7 +456,7 @@ function renderGifts(){
     const taken = !isCard && RESERVED.has(g.id);
     const pic = g.image ? `style="background-image:url('${esc(g.image)}')"` : "";
     const actions = isCard
-      ? `<div class="count">${T[lang].bought(COUNTS[g.id] || 0)}</div><div class="acts">${apiOk ? `<button class="res" data-id="${esc(g.id)}">${T[lang].cardBtn}</button>` : ""}</div>`
+      ? `<div class="acts">${apiOk ? `<button class="res" data-id="${esc(g.id)}">${T[lang].cardBtn}</button>` : ""}</div>`
       : taken
       ? `<div class="tag">${T[lang].reservedTag}</div>`
       : `<div class="acts">${g.url ? `<a class="view" href="${esc(g.url)}" target="_blank" rel="noopener">${T[lang].open}</a>` : ""}${apiOk ? `<button class="res" data-id="${esc(g.id)}">${T[lang].reserve}</button>` : ""}</div>`;
@@ -534,7 +533,7 @@ form.onsubmit = async e => {
     dev.hidden = !d.preview; if (d.preview) dev.href = d.preview;
     form.hidden = true; okBox.hidden = false;
     okBox.querySelector(".m-ok").textContent = isCard ? T[lang].okCardText : T[lang].okText;
-    if (isCard) COUNTS[current.id] = (COUNTS[current.id] || 0) + 1; else RESERVED.add(current.id);
+    if (!isCard) RESERVED.add(current.id);
     renderGifts();
   } catch(e2){ err.textContent = T[lang].eServer; }
   finally { send.disabled = false; }
